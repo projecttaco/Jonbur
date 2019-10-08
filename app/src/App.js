@@ -32,6 +32,7 @@ class App extends Component {
   }
 
   render() {
+    const { current, inputValue } = this.state;
     return (
       <DrizzleProvider options={drizzleOptions}>
         <LoadingContainer>
@@ -42,9 +43,9 @@ class App extends Component {
                 <Title level={2} style={{ font: 'Bold 3em Avenir', color: 'white' }}>Keep your ethereum.</Title>
                 <Card style={{ boxShadow: '0px 3px 6px #00000029', borderRadius: '10px' }}>
                   <Steps size={'small'} direction="vertical" current={this.state.current} onChange={this.onChange}>
-                    <Step title="Amount" description={<AmountInput/>}/>
-                    <Step title="Date" description={<DateInput/>} />
-                    <Step title="Summary" description={<Summary/>} />
+                    <Step title="Amount" description={current!=2?<AmountInput/>:null}/>
+                    <Step title="Date" description={current!=2?<DateInput/>:null} />
+                    <Step title="Summary" description={current==2?<Summary/>:null} />
                   </Steps>
                 </Card>
               </div>
