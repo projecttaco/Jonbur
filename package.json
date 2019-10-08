@@ -1,22 +1,26 @@
 {
-  "name": "pet-shop",
+  "name": "drizzle-box",
   "version": "1.0.0",
   "description": "",
-  "main": "truffle.js",
+  "main": "truffle-config.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "dev": "lite-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/truffle-box/drizzle-box.git"
+  },
+  "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "lite-server": "^2.3.0"
+  "bugs": {
+    "url": "https://github.com/truffle-box/drizzle-box/issues"
   },
+  "homepage": "https://github.com/truffle-box/drizzle-box#readme",
   "dependencies": {
-    "dotenv": "^8.1.0",
-    "truffle-hdwallet-provider": "^1.0.17"
+    "openzeppelin-solidity": "^2.1.1"
   }
 }

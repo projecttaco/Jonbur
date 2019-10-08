@@ -1,0 +1,20 @@
+.App {
+  text-align: center;
+  margin: 2rem;
+}
+
+.section {
+  text-align: left;
+  max-width: 720px;
+  margin: 4rem auto auto;
+}
+
+.topBackground {
+  background-color: #003368;
+  height: 30vh;
+}
+
+.card {
+  margin: -15vh auto;
+  width: 50vw;
+}
