@@ -17,4 +17,5 @@
 .card {
   margin: -15vh auto;
   width: 50vw;
+  min-width: 600px;
 }
