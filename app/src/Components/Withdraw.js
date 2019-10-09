@@ -1,36 +1,22 @@
 import React, { Component } from "react";
-import { Typography, Button } from 'antd';
-
+import { Typography, Button, Statistic } from 'antd';
+const { Countdown } = Statistic;
 const { Title } = Typography;
+
+const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30; // Moment is also OK
 
 export default class Withdraw extends Component {
     state = {
-        endTime: Date.now() + 90 * 60,
         withdraw: false,
-    }
-
-    renderTimeleft = endTime => {
-        // TODO: 시간 포맷 정하고 그에 맞춰서 return 하기
-        if (endTime < Date.now()) {
-            return `Time Left: 00:00:00`
-        } else {
-            const result = endTime - Date.now()
-            return `Time Left: ${(new Date(result)).toLocaleTimeString()}`
-        }
     }
     render() {
         const Background = "vault.png"
-        const endTime = this.state.endTime;
         return (
-            <div>
-                <div className="topBackground" />
-                <div className="bottomHome">
-                    <div className="card">
-                        <Title level={2} style={{ textAlign: 'center', font: 'Bold 3em Avenir', color: 'white' }}>{this.renderTimeleft(endTime)}</Title>
-                        <Button disabled={!this.state.withdraw}> Withdraw </Button>
-                        <img src={Background} width={600} alt={'vault'}/>
-                    </div>
-                </div>
+            <div className="withdraw">
+                <Title level={2} style={{ textAlign: 'center', font: 'Bold 3em Avenir', color: 'white' }}>Time Left: </Title>
+                <Countdown className="titleFont" value={deadline} format="DD:HH:MM:ss" valueStyle={{ textAlign: 'center', font: 'Bold 1em Avenir', color: 'white' }} />
+                <Button disabled={!this.state.withdraw}> Withdraw </Button>
+                <img src={Background} width={600} alt={'vault'} />
             </div>
         );
     }

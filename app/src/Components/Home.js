@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { Typography, Button } from 'antd';
+import { Row, Col, Card, Button } from 'antd';
 
-const { Title } = Typography;
 
 export default class Home extends Component {
     state = {
@@ -19,18 +18,19 @@ export default class Home extends Component {
         }
     }
     render() {
-        const Background = "vault.png"
-        const endTime = this.state.endTime;
         return (
-            <div>
-                <div className="topBackground" />
-                <div className="bottomHome">
-                    <div className="card">
-                        <Title level={2} style={{ textAlign: 'center', font: 'Bold 3em Avenir', color: 'white' }}>{this.renderTimeleft(endTime)}</Title>
-                        <Button disabled={!this.state.withdraw}> Withdraw </Button>
-                        <img src={Background} width={600} alt={'vault'}/>
-                    </div>
-                </div>
+            <div style={{backgroundColor: '#003368', height: '100%'}}>
+                <Row gutter={16} style={{padding: '50px'}}>
+                    <Col span={12} style={{backgroundColor:'white'}}>
+                        <h2 style={{font: 'Bold 3em Avenir'}}>Hang in there.</h2>
+                        <img style={{width:'inherit'}} src="vault.png" alt="vault"/>
+                    </Col>
+                    <Col span={12}>
+                        <Card>
+                            <Button>Login with Metamask</Button>
+                        </Card>
+                    </Col>
+                </Row>
             </div>
         );
     }

@@ -8,7 +8,10 @@ import { Card, Typography, Steps, Result, Button } from 'antd';
 const { Title } = Typography;
 const { Step } = Steps;
 
-const renderTitle = current => {
+const renderTitle = (current, visibleResult) => {
+    if (visibleResult) {
+        return `You're all set.`
+    }
     switch (current) {
         case 0:
             return 'Keep your ethereum.'
@@ -16,10 +19,6 @@ const renderTitle = current => {
             return 'Select the deate.'
         case 2:
             return 'Review your transaction.'
-        case 3: // Waiting for transaction to be made
-            return `You're all set.`
-        case 4: // When it's done
-            return `You're all set.`
         default:
             return 'Keep your ethereum'
     }
@@ -30,6 +29,8 @@ export default class Deposit extends Component {
         current: 0,
         inputValue: 0,
         maxAmount: 100,
+        visibleResult: true,
+        txHash: '0x5a98a6994de757ecf030af30b8ac42e01579679c56689b4e7f3be1781fd586bf',
     };
 
     onChange = current => {
@@ -41,19 +42,21 @@ export default class Deposit extends Component {
         this.setState({ inputValue: value })
     }
 
-    renderSuccess = e => {
+    renderResult = e => {
+        const txHash = this.state.txHash
         return (
             <Result
                 status="success"
                 title="Successfully jonbured your ether!"
+                style={{padding: "48px 0"}}
                 subTitle={
                     <span>
                         <p>
-                            Transaction hash: 2017182818828182881<br/>
-                            Check with Etherscan
+                            Transaction hash: {txHash}<br />
+                            Check with <a href={`https://etherscan.io/tx/${txHash}`} target="_blank">Etherscan.io</a>
                         </p>
                         <p>
-                            confirmation takes 1-5 minutes, please wait.
+                            Confirmation takes 1-5 minutes, please wait.
                         </p>
                     </span>
                 }
@@ -68,19 +71,22 @@ export default class Deposit extends Component {
     render() {
         // current는 redux로 처리하게 바꾸기
         const { current } = this.state;
+        const { visibleResult } = this.props;
         return (
             <div>
                 <div className="topBackground" />
                 <div className="bottom">
                     <div className="card">
-                        <Title level={2} style={{ font: 'Bold 3em Avenir', color: 'white' }}>{renderTitle(current)}</Title>
+                        <Title level={2} style={{ font: 'Bold 3em Avenir', color: 'white' }}>{renderTitle(current, visibleResult)}</Title>
                         <Card style={{ boxShadow: '0px 3px 6px #00000029', borderRadius: '10px' }}>
-                            <Steps size={'small'} direction="vertical" current={this.state.current} onChange={this.onChange}>
-                                <Step title="Amount" description={current < 2 ? <AmountInput /> : null} />
-                                <Step title="Date" description={current < 2 ? <DateInput /> : null} />
-                                <Step title="Summary" description={current === 2 ? <Summary /> : null} />
-                                <Step title="Result" description={current === 3 ? this.renderSuccess() : null} />
-                            </Steps>
+                            {visibleResult ?
+                                this.renderResult() :
+                                <Steps size={'small'} direction="vertical" current={this.state.current} onChange={this.onChange}>
+                                    <Step title="Amount" description={current < 2 ? <AmountInput /> : null} />
+                                    <Step title="Date" description={current < 2 ? <DateInput /> : null} />
+                                    <Step title="Summary" description={current === 2 ? <Summary /> : null} />
+                                </Steps>
+                            }
                         </Card>
                     </div>
                 </div>

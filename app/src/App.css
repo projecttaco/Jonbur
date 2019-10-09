@@ -19,6 +19,12 @@
   height: 100vh;
 }
 
+.withdraw {
+  padding: 50px;
+  background-color: #003368;
+  height: 100vh;
+}
+
 .logo {
   width: 120px;
   height: 31px;
@@ -29,6 +35,11 @@
   font-size: 2em;
   font-family: Avenir;
   font-weight: 500
+}
+
+.titleFont {
+  font: Bold 3em Avenir !important;
+  color: white !important;
 }
 
 .card {
