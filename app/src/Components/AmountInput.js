@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
-import { Row, Input, Slider } from 'antd';
+import { Row, Input, Slider } from 'antd'; 
+import {
+    AccountData,
+    ContractData,
+    ContractForm,
+} from "@drizzle/react-components";
+import { drizzleConnect } from "@drizzle/react-plugin";
 
 
-export default class AmountInput extends Component {
+class AmountInput extends Component {
     state = {
         inputValue: 0,
         maxAmount: 100,
@@ -10,6 +16,10 @@ export default class AmountInput extends Component {
 
     onAmountChange = value => {
         this.setState({ inputValue: value })
+    }
+
+    componentDidMount() {
+        console.log(this.props);
     }
 
     render() {
@@ -21,9 +31,21 @@ export default class AmountInput extends Component {
         marks[maxAmount] = 'MAX';
         return (
             <Row>
-                <Input step={0.01} min={0} max={this.state.maxAmount} value={inputValue} onChance={this.onAmountChange} style={{ font: '2em' }} prefix="Ξ" suffix="ETH" />
+                <AccountData accountIndex={0} units="ether" precision={3}/>
+                <Input step={0.01} min={0} max={this.state.maxAmount} value={inputValue} onChange={this.onAmountChange} style={{ font: '2em' }} prefix="Ξ" suffix="ETH" />
                 <Slider marks={marks} step={0.01} min={0} max={this.state.maxAmount} onChange={this.onAmountChange} value={typeof inputValue === 'number' ? inputValue : 0} style={{ margin: 20 }} />
             </Row>
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+      accounts: state.accounts,
+      SimpleStorage: state.contracts.SimpleStorage,
+      TutorialToken: state.contracts.TutorialToken,
+      drizzleStatus: state.drizzleStatus,
+    };
+  };
+
+export default drizzleConnect(AmountInput, mapStateToProps);

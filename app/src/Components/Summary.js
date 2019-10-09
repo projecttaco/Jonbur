@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Typography, Input, Button } from 'antd';
+import { Row, Col, Typography, Input, Button, Modal, Progress } from 'antd';
 
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -9,6 +9,7 @@ export default class Summary extends Component {
         endTime: (new Date(Date.now())).toLocaleString(),
         comment: null,
         commentLimit: false,
+        visible: false,
     };
 
     onCommentChange = ({ target: { value } }) => {
@@ -18,8 +19,14 @@ export default class Summary extends Component {
         })
     }
 
+    onConfirm = e => {
+        this.setState({
+            visible: true,
+        })
+    }
+
     render() {
-        const { endTime, comment, commentLimit } = this.state;
+        const { endTime, comment, commentLimit, visible } = this.state;
 
         return (
             <Row gutter={8} style={{ width: '60%', minWidth: '320px', margin: 'auto', left: '-24px' }}>
@@ -63,15 +70,31 @@ export default class Summary extends Component {
                     }
                 </Col>
                 <Col span={12}>
+                    <Button type="primary" block style={{ marginTop: '1em' }} onClick={this.onConfirm}>
+                        Confirm
+                    </Button>
+                </Col>
+                <Col span={12}>
                     <Button type="default" block style={{ marginTop: '1em' }}>
                         Go Back
                     </Button>
                 </Col>
-                <Col span={12}>
-                    <Button type="primary" block style={{ marginTop: '1em' }}>
-                        Confirm
-                    </Button>
-                </Col>
+                <Modal centered visible={visible}>
+                    <p>
+                        Did you know..
+                    </p>
+                    <p>
+                        Fun facts about Jonbur
+                    </p>
+                    <Progress
+                        strokeColor={{
+                            from: '#108ee9',
+                            to: '#87d068',
+                        }}
+                        percent={99.9}
+                        status="active"
+                    />
+                </Modal>
             </Row>
         );
     }
