@@ -14,6 +14,23 @@
   height: 30vh;
 }
 
+.bottomHome {
+  background-color: #003368;
+  height: 100vh;
+}
+
+.logo {
+  width: 120px;
+  height: 31px;
+  /* background: rgba(255, 255, 255, 0.2); */
+  margin: 0px 24px 0px 0px;
+  float: left;
+  color: white;
+  font-size: 2em;
+  font-family: Avenir;
+  font-weight: 500
+}
+
 .card {
   margin: -15vh auto;
   width: 50vw;
