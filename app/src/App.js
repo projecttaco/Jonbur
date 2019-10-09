@@ -14,7 +14,7 @@ const { Header, Content, Footer } = Layout;
 
 class App extends Component {
   state = {
-    current: '1'
+    current: '2'
   }
   chanceContent = e => {
     this.setState({
