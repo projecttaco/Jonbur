@@ -16,7 +16,10 @@ contract Jonbur{
     constructor() public{
         owner = msg.sender;
     }
-
+    
+    function getMyAmount() view public returns (uint){
+        return hodlers[msg.sender].amount;
+    }
 
     function getComment(address _addr) view public returns (string memory) {
         return hodlers[_addr].comment;
