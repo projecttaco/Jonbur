@@ -1,16 +1,25 @@
 import React, { Component } from 'react';
 import { Row, Col, Typography, Input, Button, Modal, Progress } from 'antd';
+import web3 from 'web3';
+import { drizzleConnect } from "@drizzle/react-plugin";
 
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
 
-export default class Summary extends Component {
+class Summary extends Component {
     state = {
         endTime: (new Date(Date.now())).toLocaleString(),
         comment: null,
         commentLimit: false,
         visible: false,
     };
+
+    constructor(props, context) {
+        super(props);
+        // this.contracts = context.drizzle.contracts;
+        console.log(props);
+        console.log(context);
+    }
 
     onCommentChange = ({ target: { value } }) => {
         // TODO: 140자 제한 두고, 제한 넘으면 commentLimit -> true
@@ -20,9 +29,12 @@ export default class Summary extends Component {
     }
 
     onConfirm = e => {
-        this.setState({
-            visible: true,
-        })
+        var amount = 2;
+        amount = web3.toWei(amount, "ether");
+        this.props.Jonbur.methods.deposit(0, '').send({ value: 1 });
+        // this.setState({
+        //     visible: true,
+        // })
     }
 
     render() {
@@ -99,3 +111,13 @@ export default class Summary extends Component {
         );
     }
 }
+const mapStateToProps = state => {
+    return {
+        drizzleStatus: state.drizzleStatus,
+        SimpleStorage: state.contracts.SimpleStorage,
+        Jonbur: state.contracts.Jonbur,
+        state: state,
+    }
+}
+
+export default Summary = drizzleConnect(Summary, mapStateToProps);
