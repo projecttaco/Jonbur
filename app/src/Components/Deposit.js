@@ -25,6 +25,11 @@ const renderTitle = (current, visibleResult) => {
 }
 
 export default class Deposit extends Component {
+    constructor(props, context) {
+        super(props);
+        console.log(props);
+        console.log(context);
+    }
     state = {
         current: 0,
         inputValue: 0,
@@ -53,7 +58,7 @@ export default class Deposit extends Component {
                     <span>
                         <p>
                             Transaction hash: {txHash}<br />
-                            Check with <a href={`https://etherscan.io/tx/${txHash}`} target="_blank">Etherscan.io</a>
+                            Check with <a href={`https://etherscan.io/tx/${txHash}`} target="_blank" rel="noopener noreferrer">Etherscan.io</a>
                         </p>
                         <p>
                             Confirmation takes 1-5 minutes, please wait.
@@ -71,7 +76,7 @@ export default class Deposit extends Component {
     render() {
         // current는 redux로 처리하게 바꾸기
         const { current } = this.state;
-        const { visibleResult } = this.props;
+        const { visibleResult, drizzle } = this.props;
         return (
             <div>
                 <div className="topBackground" />
@@ -84,7 +89,7 @@ export default class Deposit extends Component {
                                 <Steps size={'small'} direction="vertical" current={this.state.current} onChange={this.onChange}>
                                     <Step title="Amount" description={current < 2 ? <AmountInput /> : null} />
                                     <Step title="Date" description={current < 2 ? <DateInput /> : null} />
-                                    <Step title="Summary" description={current === 2 ? <Summary /> : null} />
+                                    <Step title="Summary" description={current === 2 ? <Summary drizzle={drizzle}/> : null} />
                                 </Steps>
                             }
                         </Card>

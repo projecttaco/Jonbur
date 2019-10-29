@@ -3671,6 +3671,11 @@ deep-is@~0.1.3:
   resolved "https://registry.yarnpkg.com/deep-is/-/deep-is-0.1.3.tgz#b369d6fb5dbc13eecf524f91b070feedc357cf34"
   integrity sha1-s2nW+128E+7PUk+RsHD+7cNXzzQ=
 
+deepmerge@^2.1.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-2.2.1.tgz#5d3ff22a01c00f645405a2fbc17d0778a1801170"
+  integrity sha512-R9hc1Xa/NOBi9WRVUWg19rl1UB7Tt4kuPd+thNJgFZoxXsTz7ncaPaeIm+40oSGuP33DfMb4sZt1QIGiJzC4EA==
+
 deepmerge@^3.2.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-3.3.0.tgz#d3c47fd6f3a93d517b14426b0628a17b0125f5f7"
@@ -3980,6 +3985,18 @@ drbg.js@^1.0.1:
     browserify-aes "^1.0.6"
     create-hash "^1.1.2"
     create-hmac "^1.1.4"
+
+drizzle@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/drizzle/-/drizzle-1.4.0.tgz#6b220c9387a5a094771076c3b2e9a4b092188b30"
+  integrity sha512-4yeBQLIni5chQfvDChNPL0fFs9dGBPUn1MbXuPpam3cgarpLYh4FFM9kkL/XWya8SlIoyv9wmpk5bJNHOxn1Vw==
+  dependencies:
+    deepmerge "^2.1.1"
+    eth-block-tracker-es5 "^2.3.2"
+    is-plain-object "^2.0.4"
+    redux "^4.0.0"
+    redux-saga "^0.16.0"
+    web3 "1.0.0-beta.35"
 
 duplexer3@^0.1.4:
   version "0.1.4"
@@ -10077,7 +10094,7 @@ redux-saga@^0.16.0:
   resolved "https://registry.yarnpkg.com/redux-saga/-/redux-saga-0.16.2.tgz#993662e86bc945d8509ac2b8daba3a8c615cc971"
   integrity sha512-iIjKnRThI5sKPEASpUvySemjzwqwI13e3qP7oLub+FycCRDysLSAOwt958niZW6LhxfmS6Qm1BzbU70w/Koc4w==
 
-redux@^4.0.1:
+redux@^4.0.0, redux@^4.0.1:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.4.tgz#4ee1aeb164b63d6a1bcc57ae4aa0b6e6fa7a3796"
   integrity sha512-vKv4WdiJxOWKxK0yRoaK3Y4pxxB0ilzVx6dszU2W8wLxlb2yikRph4iV/ymtdJ6ZxpBLFbyrxklnT5yBbQSl3Q==

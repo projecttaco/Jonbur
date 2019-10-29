@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col, Typography, Input, Button, Modal, Progress } from 'antd';
 import web3 from 'web3';
-import { drizzleConnect } from "@drizzle/react-plugin";
+import { drizzleConnect } from "drizzle-react";
 
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -18,7 +18,6 @@ class Summary extends Component {
         super(props);
         // this.contracts = context.drizzle.contracts;
         console.log(props);
-        console.log(context);
     }
 
     onCommentChange = ({ target: { value } }) => {
@@ -29,9 +28,10 @@ class Summary extends Component {
     }
 
     onConfirm = e => {
-        var amount = 2;
-        amount = web3.toWei(amount, "ether");
-        this.props.Jonbur.methods.deposit(0, '').send({ value: 1 });
+        var amount = '2';
+        console.log(this.props.drizzle.contracts.Jonbur);
+        amount = web3.utils.toWei(amount, "ether");
+        this.props.drizzle.contracts.Jonbur.methods.deposit(0, '').send({ value: 1 });
         // this.setState({
         //     visible: true,
         // })
@@ -113,9 +113,6 @@ class Summary extends Component {
 }
 const mapStateToProps = state => {
     return {
-        drizzleStatus: state.drizzleStatus,
-        SimpleStorage: state.contracts.SimpleStorage,
-        Jonbur: state.contracts.Jonbur,
         state: state,
     }
 }

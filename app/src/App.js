@@ -1,16 +1,18 @@
 import React, { Component } from "react";
-import { DrizzleProvider } from "@drizzle/react-plugin";
-import { LoadingContainer } from "@drizzle/react-components";
 
 import 'antd/dist/antd.css';
 import "./App.css";
 
-import drizzleOptions from "./drizzleOptions";
+import options from "./drizzleOptions";
+import { DrizzleProvider } from 'drizzle-react';
+import { Drizzle } from 'drizzle';
 import Home from './Components/Home';
 import Deposit from './Components/Deposit';
 import Withdraw from './Components/Withdraw';
 import { Layout, Menu } from 'antd';
 const { Header, Content, Footer } = Layout;
+
+const drizzle = new Drizzle(options);
 
 class App extends Component {
   state = {
@@ -25,15 +27,15 @@ class App extends Component {
   renderContent = current => {
     switch(current) {
       case '1':
-        return <Home/>
+        return <Home drizzle={drizzle}/>
       case '2':
-        return <Deposit visibleResult={false}/>
+        return <Deposit drizzle={drizzle} visibleResult={false}/>
       case '3':
-        return <Withdraw/>
+        return <Withdraw drizzle={drizzle}/>
       case '4':
-          return <Deposit visibleResult={true}/>
+          return <Deposit drizzle={drizzle} visibleResult={true}/>
       default:
-        return <Home/>
+        return <Home drizzle={drizzle}/>
     }
   }
 
@@ -63,10 +65,8 @@ class App extends Component {
           </Menu>
         </Header>
         <Content style={{height:'85vh'}}>
-          <DrizzleProvider options={drizzleOptions}>
-            <LoadingContainer>
+          <DrizzleProvider options={options}>
               {this.renderContent(current)}
-            </LoadingContainer>
           </DrizzleProvider>
         </Content>
         {this.renderFooter(current)}
