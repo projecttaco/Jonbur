@@ -25,9 +25,6 @@ const renderTitle = (current, visibleResult) => {
 }
 
 export default class Deposit extends Component {
-    constructor(props) {
-        super(props);
-    }
     state = {
         current: 0,
         inputValue: 0,
@@ -74,7 +71,7 @@ export default class Deposit extends Component {
     render() {
         // current는 redux로 처리하게 바꾸기
         const { current } = this.state;
-        const { visibleResult, drizzle } = this.props;
+        const { visibleResult } = this.props;
         return (
             <div>
                 <div className="topBackground" />
