@@ -31,7 +31,8 @@ class Summary extends Component {
         var amount = '2';
         console.log(this.props.drizzle.contracts.Jonbur);
         amount = web3.utils.toWei(amount, "ether");
-        this.props.drizzle.contracts.Jonbur.methods.deposit(0, '').send({ value: 1 });
+        this.props.drizzle.contracts.Jonbur.methods.deposit(0, '').send({ value: amount });
+        // this.props.drizzle.contracts.Jonbur.methods.withdraw().send();
         // this.setState({
         //     visible: true,
         // })
@@ -117,4 +118,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default Summary = drizzleConnect(Summary, mapStateToProps);
+export default drizzleConnect(Summary, mapStateToProps);

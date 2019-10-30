@@ -25,10 +25,8 @@ const renderTitle = (current, visibleResult) => {
 }
 
 export default class Deposit extends Component {
-    constructor(props, context) {
+    constructor(props) {
         super(props);
-        console.log(props);
-        console.log(context);
     }
     state = {
         current: 0,

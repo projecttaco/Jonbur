@@ -10,6 +10,7 @@ import Home from './Components/Home';
 import Deposit from './Components/Deposit';
 import Withdraw from './Components/Withdraw';
 import { Layout, Menu } from 'antd';
+import LoadingContainer from "./Components/LoadingContainer";
 const { Header, Content, Footer } = Layout;
 
 const drizzle = new Drizzle(options);
@@ -66,7 +67,9 @@ class App extends Component {
         </Header>
         <Content style={{height:'85vh'}}>
           <DrizzleProvider options={options}>
+            <LoadingContainer>
               {this.renderContent(current)}
+            </LoadingContainer>
           </DrizzleProvider>
         </Content>
         {this.renderFooter(current)}
