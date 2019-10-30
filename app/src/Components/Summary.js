@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Row, Col, Typography, Input, Button, Modal, Progress } from 'antd';
 import web3 from 'web3';
 import { drizzleConnect } from "drizzle-react";
+import PropTypes from 'prop-types'
 
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -16,7 +17,7 @@ class Summary extends Component {
 
     constructor(props, context) {
         super(props);
-        // this.contracts = context.drizzle.contracts;
+        this.contracts = context.drizzle.contracts;
         console.log(props);
     }
 
@@ -29,9 +30,8 @@ class Summary extends Component {
 
     onConfirm = e => {
         var amount = '2';
-        console.log(this.props.drizzle.contracts.Jonbur);
         amount = web3.utils.toWei(amount, "ether");
-        this.props.drizzle.contracts.Jonbur.methods.deposit(0, '').send({ value: amount });
+        this.contracts.Jonbur.methods.deposit(0, '').send({ value: amount });
         // this.props.drizzle.contracts.Jonbur.methods.withdraw().send();
         // this.setState({
         //     visible: true,
@@ -116,6 +116,9 @@ const mapStateToProps = state => {
     return {
         state: state,
     }
+}
+Summary.contextTypes = {
+    drizzle: PropTypes.object
 }
 
 export default drizzleConnect(Summary, mapStateToProps);

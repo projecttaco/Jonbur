@@ -87,7 +87,7 @@ export default class Deposit extends Component {
                                 <Steps size={'small'} direction="vertical" current={this.state.current} onChange={this.onChange}>
                                     <Step title="Amount" description={current < 2 ? <AmountInput /> : null} />
                                     <Step title="Date" description={current < 2 ? <DateInput /> : null} />
-                                    <Step title="Summary" description={current === 2 ? <Summary drizzle={drizzle}/> : null} />
+                                    <Step title="Summary" description={current === 2 ? <Summary /> : null} />
                                 </Steps>
                             }
                         </Card>
