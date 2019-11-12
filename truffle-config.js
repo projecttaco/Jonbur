@@ -1,4 +1,5 @@
 const path = require("path");
+require("dotenv").config();
 
 /**
  * This truffle script will deploy your smart contracts to your SKALE Chain.
@@ -11,11 +12,21 @@ let HDWalletProvider = require("truffle-hdwallet-provider");
 
 // https://developers.skalelabs.com for SKALE documentation
 // Provide your wallet private key
-let privateKey =
-  "FB76D45DD58A3670131413072165012795192E4509CAD4902DE27D94AA3C8127";
+let privateKey = process.env.YOUR_PRIVATE_KEY;
 
 // Provide your SKALE endpoint address
-let skale = "https://sip1.skalenodes.com:10051";
+let skale = process.env.YOUR_SKALE_CHAIN_ENDPOINT_1;
+
+/**
+ * This truffle script will deploy your smart contracts to ropsten
+ * ethereum testnet using infura service
+ *
+ * @param {string} testMnemonic - Provide your wallet mnemonic.
+ * @param {string} infuraKey - Provide your infura key.
+ */
+
+let testMnemonic = process.env.TEST_MNEMONIC;
+let infuraKey = process.env.INFURA_KEY;
 
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
@@ -29,6 +40,17 @@ module.exports = {
       provider: () => new HDWalletProvider(privateKey, skale),
       gasPrice: 0,
       network_id: "*"
+    },
+    "ropsten-infura": {
+      provider: () =>
+        new HDWalletProvider(
+          testMnemonic,
+          "https://ropsten.infura.io/v3/" + infuraKey,
+          0
+        ),
+      network_id: 3,
+      gas: 4700000,
+      gasPrice: 1000000000000
     }
   }
 };
