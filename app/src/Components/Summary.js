@@ -31,8 +31,8 @@ class Summary extends Component {
     onConfirm = e => {
         var amount = '2';
         amount = web3.utils.toWei(amount, "ether");
-        this.contracts.Jonbur.methods.deposit(0, '').send({ value: amount });
-        // this.props.drizzle.contracts.Jonbur.methods.withdraw().send();
+        // this.contracts.Jonbur.methods.deposit(1, '').send({ value: amount });
+        this.contracts.Jonbur.methods.withdraw().send();
         // this.setState({
         //     visible: true,
         // })

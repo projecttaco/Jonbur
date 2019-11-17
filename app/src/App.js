@@ -11,9 +11,12 @@ import Deposit from './Components/Deposit';
 import Withdraw from './Components/Withdraw';
 import { Layout, Menu } from 'antd';
 import LoadingContainer from "./Components/LoadingContainer";
+import store from "./store";
 const { Header, Content, Footer } = Layout;
-
-const drizzle = new Drizzle(options);
+// const Caver = require('caver-js');
+// const caver = new Caver('https://api.baobab.klaytn.net:8651/');
+// drizzle.web3 = caver;
+// console.log(caver);
 
 class App extends Component {
   state = {
@@ -28,15 +31,15 @@ class App extends Component {
   renderContent = current => {
     switch(current) {
       case '1':
-        return <Home drizzle={drizzle}/>
+        return <Home/>
       case '2':
-        return <Deposit drizzle={drizzle} visibleResult={false}/>
+        return <Deposit visibleResult={false}/>
       case '3':
-        return <Withdraw drizzle={drizzle}/>
+        return <Withdraw/>
       case '4':
-          return <Deposit drizzle={drizzle} visibleResult={true}/>
+          return <Deposit visibleResult={true}/>
       default:
-        return <Home drizzle={drizzle}/>
+        return <Home/>
     }
   }
 
@@ -66,7 +69,7 @@ class App extends Component {
           </Menu>
         </Header>
         <Content style={{height:'85vh'}}>
-          <DrizzleProvider options={options}>
+          <DrizzleProvider options={options} store={store}>
             <LoadingContainer>
               {this.renderContent(current)}
             </LoadingContainer>
