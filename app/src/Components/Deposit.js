@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+import { drizzleConnect } from "drizzle-react";
 import AmountInput from "./AmountInput";
 import DateInput from "./DateInput";
 import Summary from "./Summary";
@@ -24,15 +25,7 @@ const renderTitle = (current, visibleResult) => {
     }
 }
 
-export default class Deposit extends Component {
-    state = {
-        current: 0,
-        inputValue: 0,
-        maxAmount: 100,
-        visibleResult: true,
-        txHash: '0x5a98a6994de757ecf030af30b8ac42e01579679c56689b4e7f3be1781fd586bf',
-    };
-
+class Deposit extends Component {
     onChange = current => {
         console.log('onChange:', current);
         this.setState({ current });
@@ -43,7 +36,7 @@ export default class Deposit extends Component {
     }
 
     renderResult = e => {
-        const txHash = this.state.txHash
+        const txHash = this.props.receipt.transactionHash;
         return (
             <Result
                 status="success"
@@ -61,7 +54,7 @@ export default class Deposit extends Component {
                     </span>
                 }
                 extra={[
-                    <Button type="primary" key="console">Go Home</Button>,
+                    <Button type="primary" key="console" onClick={() => this.props.reset()}>Go Home</Button>,
                     <Button key="buy">Buy Again</Button>,
                 ]}
             />
@@ -69,19 +62,17 @@ export default class Deposit extends Component {
     }
 
     render() {
-        // current는 redux로 처리하게 바꾸기
-        const { current } = this.state;
-        const { visibleResult } = this.props;
+        const { showConfirmScreen, current } = this.props;
         return (
             <div>
                 <div className="topBackground" />
                 <div className="bottom">
                     <div className="card">
-                        <Title level={2} style={{ font: 'Bold 3em Avenir', color: 'white' }}>{renderTitle(current, visibleResult)}</Title>
+                        <Title level={2} style={{ font: 'Bold 3em Avenir', color: 'white' }}>{renderTitle(current, showConfirmScreen)}</Title>
                         <Card style={{ boxShadow: '0px 3px 6px #00000029', borderRadius: '10px' }}>
-                            {visibleResult ?
+                            {showConfirmScreen ?
                                 this.renderResult() :
-                                <Steps size={'small'} direction="vertical" current={this.state.current} onChange={this.onChange}>
+                                <Steps size={'small'} direction="vertical" current={current} onChange={this.props.onChange}>
                                     <Step title="Amount" description={current < 2 ? <AmountInput /> : null} />
                                     <Step title="Date" description={current < 2 ? <DateInput /> : null} />
                                     <Step title="Summary" description={current === 2 ? <Summary /> : null} />
@@ -94,3 +85,21 @@ export default class Deposit extends Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        state: state,
+        showConfirmScreen: state.deposit.showConfirmScreen,
+        current: state.deposit.current,
+        receipt: state.deposit.receipt,
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        reset: () => dispatch({type: 'RESET_DEPOSIT'}),
+        onChange: (current) => dispatch({type: 'UPDATE_STEP', value: current }),
+    };
+}
+
+export default drizzleConnect(Deposit, mapStateToProps, mapDispatchToProps);

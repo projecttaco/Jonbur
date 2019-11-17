@@ -43,7 +43,7 @@ const mapStateToProps = state => {
         state: state,
         account: state.accounts[0],
         balance: state.accountBalances[state.accounts[0]],
-        inputValue: state.input.amount,
+        inputValue: state.deposit.amount,
     };
 };
 

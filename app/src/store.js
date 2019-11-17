@@ -8,13 +8,16 @@ const TODOS_RECEIVED = 'MY_APP/TODOS_RECEIVED'
 
 const initialState = {
     amount: 0,
+    showConfirmScreen: false,
+    current: 0,
+    receipt: '0x0',
 }
 
 const update = (state, ...args) => {
     return Object.assign({}, state, ...args);
 }
 // reducers
-const appReducer = (state = initialState, action) => {
+const depositReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'UPDATE_AMOUNT':
             // return Object.assign({}, state, { amount: action.value });
@@ -27,6 +30,14 @@ const appReducer = (state = initialState, action) => {
                 inputError = true;
             }
             return update(state, { amount: amount, inputError });
+        case 'SHOW_CONFIRM_SCREEN':
+            return update(state, { showConfirmScreen: true });
+        case 'RESET_DEPOSIT':
+            return update(state, { amount: 0, inputError: false, showConfirmScreen: false, current: 0 });
+        case 'UPDATE_STEP':
+            return update(state, { current: action.value });
+        case 'SAVE_RECEIPT':
+            return update(state, { receipt: action.value });
         default:
             return state;
     }
@@ -48,7 +59,7 @@ function* appRootSaga() {
 }
 
 // app Reducers and Sagas
-const appReducers = { input: appReducer }
+const appReducers = { deposit: depositReducer }
 const appSagas = [appRootSaga]
 
 const store = generateStore({

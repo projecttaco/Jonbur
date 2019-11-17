@@ -34,11 +34,11 @@ class Summary extends Component {
         const { inputDate, gasFee } = this.state;
         const amount = web3.utils.toWei((inputValue - gasFee) + "", "ether");
         console.log(amount, gasFee);
-        this.contracts.Jonbur.methods.deposit(inputDate, '').send({ value: amount }).then(receipt => console.log(receipt));
-        // this.contracts.Jonbur.methods.withdraw().send().then(reciept => console.log(reciept));
-        // this.setState({ 
-        //     visible: true,
-        // })
+        this.contracts.Jonbur.methods.deposit(inputDate, '').send({ value: amount }).then(receipt => {
+            console.log(receipt);
+            this.props.showConfirmScreen();
+            this.props.saveReceipt(receipt);
+        });
     }
 
     render() {
@@ -120,11 +120,19 @@ class Summary extends Component {
 const mapStateToProps = state => {
     return {
         state: state,
-        inputValue: state.input.amount,
+        inputValue: state.deposit.amount,
     }
 }
+
+const mapDispatchToProps = dispatch => {
+    return {
+        showConfirmScreen: () => dispatch({type: 'SHOW_CONFIRM_SCREEN'}),
+        saveReceipt: (receipt) => dispatch({type: 'SAVE_RECEIPT', value: receipt}),
+    };
+}
+
 Summary.contextTypes = {
     drizzle: PropTypes.object
 }
 
-export default drizzleConnect(Summary, mapStateToProps);
+export default drizzleConnect(Summary, mapStateToProps, mapDispatchToProps);
