@@ -5,7 +5,6 @@ import "./App.css";
 
 import options from "./drizzleOptions";
 import { DrizzleProvider } from 'drizzle-react';
-import { Drizzle } from 'drizzle';
 import Home from './Components/Home';
 import Deposit from './Components/Deposit';
 import Withdraw from './Components/Withdraw';

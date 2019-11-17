@@ -7,8 +7,7 @@ const TODOS_FETCH = 'MY_APP/TODOS_FETCH'
 const TODOS_RECEIVED = 'MY_APP/TODOS_RECEIVED'
 
 const initialState = {
-    test: true,
-    amount: 100,
+    amount: 0,
 }
 
 const update = (state, ...args) => {
@@ -19,7 +18,15 @@ const appReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'UPDATE_AMOUNT':
             // return Object.assign({}, state, { amount: action.value });
-            return update(state, { amount: action.value });
+            var amount;
+            var inputError = false;
+            try {
+                amount = parseFloat(action.value);
+            } catch {
+                amount = 0;
+                inputError = true;
+            }
+            return update(state, { amount: amount, inputError });
         default:
             return state;
     }
