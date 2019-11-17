@@ -17,7 +17,7 @@ const renderTitle = (current, visibleResult) => {
         case 0:
             return 'Keep your ethereum.'
         case 1:
-            return 'Select the deate.'
+            return 'Select the date.'
         case 2:
             return 'Review your transaction.'
         default:
