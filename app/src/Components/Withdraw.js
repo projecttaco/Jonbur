@@ -16,6 +16,11 @@ class Withdraw extends Component {
         }
     }
 
+    componentDidMount = () => {
+        // Get deadline
+        // Set deadline in reducer
+    }
+
     onClick = () => {
         console.log(this.contracts);
         this.contracts.Jonbur.methods.withdraw().send().then(reciept => console.log(reciept));
