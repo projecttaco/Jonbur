@@ -8,17 +8,18 @@ const options = {
     block: false,
     fallback: {
       type: "ws",
-      url: "ws://127.0.0.1:8545",
-    },
+      // url: "ws://127.0.0.1:8545"
+      url: "https://sip1.skalenodes.com:10051"
+    }
   },
   contracts: [Jonbur],
   events: {
     Jonbur: ["HodlerAdded", "HodlerRewarded"],
-    SimpleStorage: ["StorageSet"],
+    SimpleStorage: ["StorageSet"]
   },
   polls: {
-    accounts: 1500,
-  },
+    accounts: 1500
+  }
 };
 
 export default options;
