@@ -43,6 +43,15 @@ const depositReducer = (state = initialState, action) => {
     }
 }
 
+const menuReducer = (state = { current: "2" }, action) => {
+    switch (action.type) {
+        case 'GOTO':
+            return update(state, { current: action.value });
+        default:
+            return state;
+    }
+}
+
 // fetch data from service using sagas
 function* fetchTodos() {
     //  const todos = yield fetch('https://jsonplaceholder.typicode.com/todos')
@@ -59,7 +68,7 @@ function* appRootSaga() {
 }
 
 // app Reducers and Sagas
-const appReducers = { deposit: depositReducer }
+const appReducers = { deposit: depositReducer, menu: menuReducer }
 const appSagas = [appRootSaga]
 
 const store = generateStore({

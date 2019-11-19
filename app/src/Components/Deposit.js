@@ -35,7 +35,7 @@ class Deposit extends Component {
         this.setState({ inputValue: value })
     }
 
-    renderResult = e => {
+    renderResult = () => {
         const txHash = this.props.receipt.transactionHash;
         return (
             <Result
@@ -46,7 +46,7 @@ class Deposit extends Component {
                     <span>
                         <p>
                             Transaction hash: {txHash}<br />
-                            Check with <a href={`https://etherscan.io/tx/${txHash}`} target="_blank" rel="noopener noreferrer">Etherscan.io</a>
+                            Check with <a href={`https://ropsten.etherscan.io/tx/${txHash}`} target="_blank" rel="noopener noreferrer">Etherscan.io</a>
                         </p>
                         <p>
                             Confirmation takes 1-5 minutes, please wait.
@@ -54,8 +54,8 @@ class Deposit extends Component {
                     </span>
                 }
                 extra={[
-                    <Button type="primary" key="console" onClick={() => this.props.reset()}>Go Home</Button>,
-                    <Button key="buy">Buy Again</Button>,
+                    <Button type="primary" key="console" onClick={() => this.props.reset()}>Withdraw</Button>,
+                    <Button key="buy" onClick={() => this.props.reset()}>Jonbur Again</Button>,
                 ]}
             />
         )

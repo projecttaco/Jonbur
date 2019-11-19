@@ -15,7 +15,6 @@ class AmountInput extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props);
         this.props.amountChange(Number(web3.utils.fromWei(this.props.balance, "ether")));
     }
 

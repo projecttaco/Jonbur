@@ -18,7 +18,8 @@ let privateKey = process.env.YOUR_PRIVATE_KEY;
 let skale = process.env.YOUR_SKALE_CHAIN_ENDPOINT_1;
 
 // Provider your wallet mnemonic to use infura service
-let testMnemonic = process.env.TEST_MNEMONIC;
+let testMnemonic = "explain soul power employ mixture essay hurdle swarm guitar ladder bicycle napkin"
+
 
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>

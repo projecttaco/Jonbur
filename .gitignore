@@ -1,8 +1,8 @@
 node_modules
 build
-app/src/contracts
 
 package-lock.json
 yarn.lock
 
 .DS_Store
+.env
