@@ -7,7 +7,6 @@ import web3 from 'web3';
 class AmountInput extends Component {
     constructor(props, context) {
         super(props);
-        console.log(props);
 
         this.state = {
             inputValue: 0,
@@ -15,16 +14,14 @@ class AmountInput extends Component {
         };
     }
 
-    onAmountChange = value => {
-        this.setState({ inputValue: value })
-    }
-
     componentDidMount() {
         console.log(this.props);
+        this.props.amountChange(Number(web3.utils.fromWei(this.props.balance, "ether")));
     }
 
     render() {
-        const { inputValue, maxAmount } = this.state;
+        const { maxAmount } = this.state;
+        const { inputValue } = this.props;
         var marks = {
             0: '0 ETH',
             // 100: maxAmount,
@@ -32,11 +29,10 @@ class AmountInput extends Component {
         marks[maxAmount] = 'MAX';
         return (
             <Row>
-                {/* <AccountData accountIndex={0} units="ether" precision={3}/> */}
-                <p style={{float:'right'}}>{this.props.account}</p>
-                <h3 style={{float:'right'}}>Balance: {this.state.maxAmount}ETH</h3>
-                <Input step={0.01} min={0} max={this.state.maxAmount} value={inputValue} onChange={this.onAmountChange} style={{ font: '2em' }} prefix="Ξ" suffix="ETH" />
-                <Slider marks={marks} step={0.01} min={0} max={this.state.maxAmount} onChange={this.onAmountChange} value={typeof inputValue === 'number' ? inputValue : 0} style={{ margin: 20 }} />
+                <p style={{ float: 'right' }}>{this.props.account}</p>
+                <h3 style={{ float: 'right' }}>Balance: {this.state.maxAmount}ETH</h3>
+                <Input step={0.01} min={0} max={this.state.maxAmount} value={inputValue} onChange={e => this.props.amountChange(e.target.value)} style={{ font: '2em' }} prefix="Ξ" suffix="ETH" />
+                <Slider step={0.01} min={0} max={this.state.maxAmount} value={inputValue} onChange={e => this.props.amountChange(e)} style={{ margin: 20 }} marks={marks} />
             </Row>
         );
     }
@@ -47,7 +43,14 @@ const mapStateToProps = state => {
         state: state,
         account: state.accounts[0],
         balance: state.accountBalances[state.accounts[0]],
+        inputValue: state.deposit.amount,
     };
 };
 
-export default drizzleConnect(AmountInput, mapStateToProps);
+const mapDispatchToProps = dispatch => {
+    return {
+        amountChange: amount => dispatch({type: 'UPDATE_AMOUNT', value: amount}),
+    };
+}
+
+export default drizzleConnect(AmountInput, mapStateToProps, mapDispatchToProps);

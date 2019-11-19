@@ -8,17 +8,18 @@ const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
 
 class Summary extends Component {
-    state = {
-        endTime: (new Date(Date.now())).toLocaleString(),
-        comment: null,
-        commentLimit: false,
-        visible: false,
-    };
-
     constructor(props, context) {
         super(props);
         this.contracts = context.drizzle.contracts;
-        console.log(props);
+
+        this.state = {
+            endTime: (new Date(Date.now())).toLocaleString(),
+            comment: null,
+            commentLimit: false,
+            visible: false,
+            gasFee: 0.002108,
+            inputDate: 1,
+        };
     }
 
     onCommentChange = ({ target: { value } }) => {
@@ -29,30 +30,32 @@ class Summary extends Component {
     }
 
     onConfirm = e => {
-        var amount = '2';
-        amount = web3.utils.toWei(amount, "ether");
-        this.contracts.Jonbur.methods.deposit(1, '').send({ value: amount });
-        // this.contracts.Jonbur.methods.withdraw().send();
-        
-        // this.props.drizzle.contracts.Jonbur.methods.withdraw().send();
-        // this.setState({
-        //     visible: true,
-        // })
+        const { inputValue } = this.props;
+        const { inputDate, gasFee } = this.state;
+        const amount = web3.utils.toWei((inputValue - gasFee) + "", "ether");
+        console.log(amount, gasFee);
+        this.contracts.Jonbur.methods.deposit(inputDate, '').send({ value: amount }).then(receipt => {
+            console.log(receipt);
+            this.props.showConfirmScreen();
+            this.props.saveReceipt(receipt);
+        });
     }
 
     render() {
-        const { endTime, comment, commentLimit, visible } = this.state;
+        const { endTime, comment, commentLimit, visible, gasFee } = this.state;
+        const { inputValue } = this.props;
+        const balance = inputValue * 1 - gasFee;
 
         return (
             <Row gutter={8} style={{ width: '60%', minWidth: '320px', margin: 'auto', left: '-24px' }}>
                 <Col>
-                    <Paragraph strong style={{ textAlign: 'right', fontSize: '0.8em' }}>4000 ETH</Paragraph>
+                    <Paragraph strong style={{ textAlign: 'right', fontSize: '0.8em' }}>{inputValue} ETH</Paragraph>
                 </Col>
                 <Col span={6}>
                     <Paragraph strong style={{ textAlign: 'right', fontSize: '0.8em' }}>- Gas Fee</Paragraph>
                 </Col>
                 <Col span={18}>
-                    <Paragraph strong style={{ textAlign: 'right', fontSize: '0.8em' }}>2 ETH</Paragraph>
+                    <Paragraph strong style={{ textAlign: 'right', fontSize: '0.8em' }}>{gasFee} ETH</Paragraph>
                 </Col>
                 <Col span={24} style={{ width: '110%' }}>
                     <hr />
@@ -61,10 +64,10 @@ class Summary extends Component {
                     <Paragraph strong style={{ textAlign: 'right', fontSize: '0.8em' }}>Deposit</Paragraph>
                 </Col>
                 <Col span={18}>
-                    <Paragraph strong style={{ textAlign: 'right', fontSize: '0.8em' }}>3988 ETH</Paragraph>
+                    <Paragraph strong style={{ textAlign: 'right', fontSize: '0.8em' }}>{balance} ETH</Paragraph>
                 </Col>
                 <Col>
-                    <Title strong level={1} style={{ textAlign: 'center', marginBottom: '0.1em' }}>3,998 ETH</Title>
+                    <Title strong level={1} style={{ textAlign: 'center', marginBottom: '0.1em' }}>{balance} ETH</Title>
                     <Paragraph strong style={{ textAlign: 'center' }}>will be tied up until</Paragraph>
                     <Title strong level={3} style={{ textAlign: 'center', marginTop: '0' }}>{endTime}</Title>
                 </Col>
@@ -117,10 +120,19 @@ class Summary extends Component {
 const mapStateToProps = state => {
     return {
         state: state,
+        inputValue: state.deposit.amount,
     }
 }
+
+const mapDispatchToProps = dispatch => {
+    return {
+        showConfirmScreen: () => dispatch({type: 'SHOW_CONFIRM_SCREEN'}),
+        saveReceipt: (receipt) => dispatch({type: 'SAVE_RECEIPT', value: receipt}),
+    };
+}
+
 Summary.contextTypes = {
     drizzle: PropTypes.object
 }
 
-export default drizzleConnect(Summary, mapStateToProps);
+export default drizzleConnect(Summary, mapStateToProps, mapDispatchToProps);
