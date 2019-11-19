@@ -38,6 +38,10 @@ const depositReducer = (state = initialState, action) => {
             return update(state, { current: action.value });
         case 'SAVE_RECEIPT':
             return update(state, { receipt: action.value });
+        case 'SHOW_MODAL':
+            return update(state, { modal: true });
+        case 'HIDE_MODAL':
+            return update(state, { modal: false });
         default:
             return state;
     }

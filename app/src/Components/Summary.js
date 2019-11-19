@@ -34,16 +34,18 @@ class Summary extends Component {
         const { inputDate, gasFee } = this.state;
         const amount = web3.utils.toWei((inputValue - gasFee) + "", "ether");
         console.log(amount, gasFee);
+        this.props.showModal();
         this.contracts.Jonbur.methods.deposit(inputDate, '').send({ value: amount }).then(receipt => {
             console.log(receipt);
+            this.props.hideModal();
             this.props.showConfirmScreen();
             this.props.saveReceipt(receipt);
         });
     }
 
     render() {
-        const { endTime, comment, commentLimit, visible, gasFee } = this.state;
-        const { inputValue } = this.props;
+        const { endTime, comment, commentLimit, gasFee } = this.state;
+        const { inputValue, modal } = this.props;
         const balance = inputValue * 1 - gasFee;
 
         return (
@@ -97,13 +99,21 @@ class Summary extends Component {
                         Go Back
                     </Button>
                 </Col>
-                <Modal centered visible={visible}>
-                    <p>
+                <Modal 
+                centered 
+                visible={modal} 
+                closable={false}
+                footer={null}
+                >
+                    <h3>
                         Did you know..
-                    </p>
+                    </h3>
                     <p>
-                        Fun facts about Jonbur
+                        <i>
+                            Fun facts about Jonbur
+                        </i>
                     </p>
+                    <br/>
                     <Progress
                         strokeColor={{
                             from: '#108ee9',
@@ -111,7 +121,11 @@ class Summary extends Component {
                         }}
                         percent={99.9}
                         status="active"
+                        showInfo={false}
                     />
+                    <p style={{textAlign: 'center'}}>
+                        Pending transaction...
+                    </p>
                 </Modal>
             </Row>
         );
@@ -121,13 +135,16 @@ const mapStateToProps = state => {
     return {
         state: state,
         inputValue: state.deposit.amount,
+        modal: state.deposit.modal,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        showConfirmScreen: () => dispatch({type: 'SHOW_CONFIRM_SCREEN'}),
-        saveReceipt: (receipt) => dispatch({type: 'SAVE_RECEIPT', value: receipt}),
+        showConfirmScreen: () => dispatch({ type: 'SHOW_CONFIRM_SCREEN' }),
+        saveReceipt: (receipt) => dispatch({ type: 'SAVE_RECEIPT', value: receipt }),
+        showModal: () => dispatch({ type: 'SHOW_MODAL' }),
+        hideModal: () => dispatch({ type: 'HIDE_MODAL' }),
     };
 }
 

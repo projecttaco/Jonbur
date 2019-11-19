@@ -54,7 +54,7 @@ class Deposit extends Component {
                     </span>
                 }
                 extra={[
-                    <Button type="primary" key="console" onClick={() => this.props.reset()}>Withdraw</Button>,
+                    <Button type="primary" key="console" onClick={() => this.props.gotoWithdraw()}>Withdraw</Button>,
                     <Button key="buy" onClick={() => this.props.reset()}>Jonbur Again</Button>,
                 ]}
             />
@@ -99,6 +99,7 @@ const mapDispatchToProps = dispatch => {
     return {
         reset: () => dispatch({type: 'RESET_DEPOSIT'}),
         onChange: (current) => dispatch({type: 'UPDATE_STEP', value: current }),
+        gotoWithdraw: () => dispatch({ type: 'GOTO', value: '3'})
     };
 }
 
