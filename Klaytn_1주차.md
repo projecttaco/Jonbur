@@ -52,3 +52,4 @@
 ### 다음주 계획
 - 개발에 필요한 환경세팅
 - Branding / Color Pallete 설정 / 로고 / Low-fidelity prototyping
+- 인프런 클레이튼 교육 수강
