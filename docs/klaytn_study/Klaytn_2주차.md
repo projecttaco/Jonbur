@@ -1,6 +1,6 @@
 # Klaytn 스터디 2주차 (11/12)
 
-## 이번주 목표
+### 이번주 목표
 - 개발 필요 환경 설정
 - Low-fidelity Prototyping 및 화면 설계
 - SmartContract 설계
