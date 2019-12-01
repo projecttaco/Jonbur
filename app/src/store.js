@@ -1,6 +1,7 @@
 import { put, takeEvery } from 'redux-saga/effects'
 import { generateStore } from 'drizzle'
 import drizzleOptions from './drizzleOptions'
+import moment from 'moment'
 
 // actions
 const TODOS_FETCH = 'MY_APP/TODOS_FETCH'
@@ -11,6 +12,15 @@ const initialState = {
     showConfirmScreen: false,
     current: 0,
     receipt: '0x0',
+    date: moment(),
+    time: moment(),
+    year: moment().year(),
+    month: moment().month(),
+    day: moment().date(),
+    hour: moment().hour(),
+    minute: moment().minute(),
+    second: moment().second(),
+    withdrawDate: moment(),
 }
 
 const update = (state, ...args) => {
@@ -30,6 +40,20 @@ const depositReducer = (state = initialState, action) => {
                 inputError = true;
             }
             return update(state, { amount: amount, inputError });
+        case 'UPDATE_DATE':
+            var year = action.date.year();
+            var month = action.date.month();
+            var day = action.date.date();
+            var withdrawDate = moment().year(year).month(month).date(day).hour(state.hour).minute(state.minute).second(state.second);
+            // withdrawDate = withdrawDate.unix();
+            return update(state, { date: action.date, year: year, month: month, day: day, withdrawDate: withdrawDate });
+        case 'UPDATE_TIME':
+            var hour = action.time.hour();
+            var minute = action.time.minute();
+            var second = action.time.second();
+            withdrawDate = moment().year(state.year).month(state.month).date(state.day).hour(hour).minute(minute).second(second);
+            // withdrawDate = withdrawDate.unix();
+            return update(state, { time: action.time, hour: hour, minute: minute, second: second, withdrawDate: withdrawDate });
         case 'SHOW_CONFIRM_SCREEN':
             return update(state, { showConfirmScreen: true });
         case 'RESET_DEPOSIT':
