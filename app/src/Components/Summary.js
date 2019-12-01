@@ -3,6 +3,7 @@ import { Row, Col, Typography, Input, Button, Modal, Progress } from 'antd';
 import web3 from 'web3';
 import { drizzleConnect } from "drizzle-react";
 import PropTypes from 'prop-types'
+import moment from 'moment'
 
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -18,7 +19,7 @@ class Summary extends Component {
             commentLimit: false,
             visible: false,
             gasFee: 0.002108,
-            inputDate: 1,
+            // inputDate: 1,
         };
     }
 
@@ -30,12 +31,12 @@ class Summary extends Component {
     }
 
     onConfirm = e => {
-        const { inputValue } = this.props;
-        const { inputDate, gasFee } = this.state;
+        const { inputValue, withdrawDate } = this.props;
+        const { gasFee } = this.state;
         const amount = web3.utils.toWei((inputValue - gasFee) + "", "ether");
         console.log(amount, gasFee);
         this.props.showModal();
-        this.contracts.Jonbur.methods.deposit(inputDate, '').send({ value: amount }).then(receipt => {
+        this.contracts.Jonbur.methods.deposit(withdrawDate.unix(), '').send({ value: amount }).then(receipt => {
             console.log(receipt);
             this.props.hideModal();
             this.props.showConfirmScreen();
@@ -45,7 +46,7 @@ class Summary extends Component {
 
     render() {
         const { endTime, comment, commentLimit, gasFee } = this.state;
-        const { inputValue, modal } = this.props;
+        const { inputValue, modal, withdrawDate } = this.props;
         const balance = inputValue * 1 - gasFee;
 
         return (
@@ -71,7 +72,7 @@ class Summary extends Component {
                 <Col>
                     <Title strong level={1} style={{ textAlign: 'center', marginBottom: '0.1em' }}>{balance} ETH</Title>
                     <Paragraph strong style={{ textAlign: 'center' }}>will be tied up until</Paragraph>
-                    <Title strong level={3} style={{ textAlign: 'center', marginTop: '0' }}>{endTime}</Title>
+                    <Title strong level={3} style={{ textAlign: 'center', marginTop: '0' }}>{withdrawDate.format('YYYY-MM-DD, HH:mm:ss')}</Title>
                 </Col>
                 <Col>
                     <TextArea
@@ -136,6 +137,7 @@ const mapStateToProps = state => {
         state: state,
         inputValue: state.deposit.amount,
         modal: state.deposit.modal,
+        withdrawDate: state.deposit.withdrawDate,
     }
 }
 
