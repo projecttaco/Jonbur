@@ -22,23 +22,12 @@ contract Jonbur{
         hodlIndex = 0;
     }
     
-    function getHodlIndexes() view private returns (uint[] memory){
+    function getHodlIndexes() view public returns (uint[] memory){
         return hodlers[msg.sender];
     }
     
-    function getHodls() view public returns (uint[] memory, uint[] memory, uint[] memory, bool[] memory){
-        uint[] memory indexes = getHodlIndexes();
-        uint[] memory hodlDate = new uint[](indexes.length);
-        uint[] memory hodlAmount = new uint[](indexes.length);
-        bool[] memory hodlSpent = new bool[](indexes.length);
-        Hodl memory tempHodl;
-        for(uint i = 0; i < indexes.length; i++){
-            tempHodl = hodls[indexes[i]];
-            hodlDate[i] = tempHodl.date;
-            hodlAmount[i] = tempHodl.amount;
-            hodlSpent[i] = tempHodl.spent;
-        }
-        return (indexes, hodlDate, hodlAmount, hodlSpent);
+    function getHodl(uint _index) view public returns (uint , uint, bool){
+        return (hodls[_index].date, hodls[_index].amount, hodls[_index].spent);
     }
     
     function getComment(uint _index) view public returns (string memory){
