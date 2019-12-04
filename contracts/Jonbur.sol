@@ -5,39 +5,48 @@ contract Jonbur{
         uint date;
         string comment;
         uint amount;
+        bool spent;
+        address hodlOwner;
     }
     
     address public owner;
-    mapping(address => Hodl) hodlers;
+    uint public hodlIndex;
+    mapping(uint => Hodl) hodls;
+    mapping(address => uint[]) hodlers;
     
     event HodlerAdded(address _addr, string _comment);
     event HodlerRewarded(address _addr);
     
     constructor() public{
         owner = msg.sender;
-    }
-
-
-    function getComment(address _addr) view public returns (string memory) {
-        return hodlers[_addr].comment;
+        hodlIndex = 0;
     }
     
-    function getMyComment() view public returns (string memory) {
-        return hodlers[msg.sender].comment;
+    function getHodlIndexes() view public returns (uint[] memory){
+        return hodlers[msg.sender];
+    }
+    
+    function getHodl(uint _index) view public returns (uint , uint, bool){
+        return (hodls[_index].date, hodls[_index].amount, hodls[_index].spent);
+    }
+    
+    function getComment(uint _index) view public returns (string memory){
+        return hodls[_index].comment;
     }
     
     function deposit(uint _date, string memory _comment) public payable {
-        require(hodlers[msg.sender].amount == 0, "Already has a Jonbur");
-        hodlers[msg.sender] = Hodl(_date, _comment, msg.value);
+        hodlers[msg.sender].push(hodlIndex);
+        hodls[hodlIndex] = Hodl(_date, _comment, msg.value, false, msg.sender);
+        hodlIndex++;
         emit HodlerAdded(msg.sender, _comment);
     }
     
-    function withdraw() public {
-        require(hodlers[msg.sender].date > 0, "Don't have a Jonbur");
-        require(hodlers[msg.sender].date <= block.timestamp, "Not yet");
-        msg.sender.transfer(hodlers[msg.sender].amount);
+    function withdraw(uint _index) public {
+        require(hodls[_index].hodlOwner == msg.sender, "Invalid Jonbur");
+        require(hodls[_index].spent == false, "Already Rewarded");
+        require(hodls[_index].date <= block.timestamp, "Not yet");
+        msg.sender.transfer(hodls[_index].amount);
         emit HodlerRewarded(msg.sender);
-        hodlers[msg.sender].amount = 0;
-        hodlers[msg.sender].comment = "";
+        hodls[_index].spent = true;
     }
 }
