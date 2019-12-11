@@ -26,15 +26,13 @@
 }
 
 .logo {
-  width: 120px;
-  height: 31px;
   /* background: rgba(255, 255, 255, 0.2); */
-  margin: 0px 24px 0px 0px;
-  float: left;
+  margin: auto;
   color: white;
   font-size: 2em;
   font-family: Avenir;
-  font-weight: 500
+  font-weight: 500;
+  line-height: 64px;
 }
 
 .titleFont {
@@ -44,6 +42,19 @@
 
 .card {
   margin: -15vh auto;
-  width: 50vw;
-  min-width: 600px;
+  width: 90vw;
+  /* min-width: 600px; */
+}
+
+.float{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:40px;
+	right:40px;
+	background-color:#0C9;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
 }

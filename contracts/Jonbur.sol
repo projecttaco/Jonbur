@@ -8,7 +8,7 @@ contract Jonbur{
         bool spent;
         address hodlOwner;
     }
-    
+
     address public owner;
     uint public hodlIndex;
     mapping(uint => Hodl) hodls;

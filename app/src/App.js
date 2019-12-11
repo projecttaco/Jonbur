@@ -6,8 +6,9 @@ import "./App.css";
 import { drizzleConnect } from 'drizzle-react';
 import Home from './Components/Home';
 import Deposit from './Components/Deposit';
+import Dashboard from './Components/Dashboard';
 import Withdraw from './Components/Withdraw';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Icon } from 'antd';
 import web3 from 'web3';
 const { Header, Content, Footer } = Layout;
 // const Caver = require('caver-js');
@@ -30,7 +31,9 @@ class App extends Component {
       case '1':
         return <Home />
       case '2':
-        return <Deposit visibleResult={false} />
+        // return <Deposit visibleResult={false} />
+        return <Dashboard/>
+        // return <Withdraw />
       case '3':
         return <Withdraw />
       default:
@@ -46,11 +49,11 @@ class App extends Component {
     const { current, balance, account } = this.props;
     return (
       <Layout className="layout">
-        <Header>
-          <div className="logo" style={{ lineHeight: '64px' }}>
+        <Header style={{padding: '0 25px', position: 'fixed', width: '100%'}}>
+          {/* <div className="logo">
             Jonbur.
-          </div>
-          <Menu
+          </div> */}
+          {/* <Menu
             theme={'dark'}
             mode="horizontal"
             selectedKeys={[current]}
@@ -60,15 +63,19 @@ class App extends Component {
             <Menu.Item key="1">Home</Menu.Item>
             <Menu.Item key="2">Deposit</Menu.Item>
             <Menu.Item key="3">Withdraw</Menu.Item>
-          </Menu>
-          <div style={{ float: "right", marginTop: "-75px", color: "white", textAlign:"right" }}>
+          </Menu> */}
+          <Icon type="menu" style={{color:'white', fontSize:'18px'}}/>
+
+          <div style={{ float: "right", color: "white", textAlign:"right" }}>
             <div style={{height: '18px', color: "#aeaeae"}}>
-              {account}
+              {/* <p>Ethereum Mainnet</p> */}
+              {`\n${account.substr(0, 6)}...${account.substr(account.length-4, account.length)}`}
             </div>
-            <div>
+            {/* <div>
               {web3.utils.fromWei(balance, "ether")} ETH
-            </div>
+            </div> */}
           </div>
+
         </Header>
         <Content style={{ height: '85vh' }}>
           {this.renderContent(current)}
