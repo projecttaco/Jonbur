@@ -6,8 +6,10 @@ import "./App.css";
 import { drizzleConnect } from 'drizzle-react';
 import Home from './Components/Home';
 import Deposit from './Components/Deposit';
+import Dashboard from './Components/Dashboard';
 import Withdraw from './Components/Withdraw';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Icon } from 'antd';
+import LoadingContainer from './Components/LoadingContainer';
 import web3 from 'web3';
 const { Header, Content, Footer } = Layout;
 // const Caver = require('caver-js');
@@ -30,7 +32,9 @@ class App extends Component {
       case '1':
         return <Home />
       case '2':
-        return <Deposit visibleResult={false} />
+        // return <Deposit visibleResult={false} />
+        return <Dashboard />
+      // return <Withdraw />
       case '3':
         return <Withdraw />
       default:
@@ -46,32 +50,29 @@ class App extends Component {
     const { current, balance, account } = this.props;
     return (
       <Layout className="layout">
-        <Header>
-          <div className="logo" style={{ lineHeight: '64px' }}>
+        <Header style={{ padding: '0 25px', position: 'fixed', width: '100%', backgroundColor: '#003368' }}>
+          <Icon type="menu" style={{ color: 'white', fontSize: '18px' }} />
+          {/* <div className="logo">
             Jonbur.
-          </div>
-          <Menu
-            theme={'dark'}
-            mode="horizontal"
-            selectedKeys={[current]}
-            style={{ lineHeight: '64px' }}
-            onSelect={e => this.props.goto(e.key)}
-          >
-            <Menu.Item key="1">Home</Menu.Item>
-            <Menu.Item key="2">Deposit</Menu.Item>
-            <Menu.Item key="3">Withdraw</Menu.Item>
-          </Menu>
-          <div style={{ float: "right", marginTop: "-75px", color: "white", textAlign:"right" }}>
-            <div style={{height: '18px', color: "#aeaeae"}}>
-              {account}
+          </div> */}
+
+          <div style={{ float: "right", color: "#ececec", textAlign: "right", fontSize: '12px'}}>
+            <div style={{ lineHeight:'48px', height: '32px', color: '#aeaeae' }}>
+              <Icon type="sketch"/> Ropsten Testnet
             </div>
-            <div>
+            <div style={{ lineHeight:'16px' }}>
+              {account && `\n${account.substr(0, 6)}...${account.substr(account.length - 4, account.length)}`}
+            </div>
+            {/* <div>
               {web3.utils.fromWei(balance, "ether")} ETH
-            </div>
+            </div> */}
           </div>
+
         </Header>
-        <Content style={{ height: '85vh' }}>
-          {this.renderContent(current)}
+        <Content>
+          <LoadingContainer>
+            {this.renderContent(current)}
+          </LoadingContainer>
         </Content>
         {this.renderFooter(current)}
       </Layout>

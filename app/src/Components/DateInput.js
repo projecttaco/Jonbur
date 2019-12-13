@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, DatePicker, TimePicker } from 'antd';
+import { Row, Col, DatePicker, TimePicker, Input } from 'antd';
 import { drizzleConnect } from "drizzle-react";
 // import moment from 'moment';
 
@@ -24,10 +24,11 @@ class DateInput extends Component {
         return (
             <Row justify={'space-between'}>
                 <Col span={14}>
-                    <DatePicker style={{ width: 280 }} defaultValue={inputDate} onChange={e => this.props.dateChange(e)}/>
+                    <DatePicker defaultValue={inputDate} onChange={e => this.props.dateChange(e)}/>
+                    {/* <Input placeholder="today" type="date"/> */}
                 </Col>
                 <Col span={8}>
-                    <TimePicker style={{ width: 168 }} defaultValue={inputTime} onChange={e => this.props.timeChange(e)}/>
+                    <TimePicker defaultValue={inputTime} onChange={e => this.props.timeChange(e)}/>
                 </Col>
             </Row>
         );
