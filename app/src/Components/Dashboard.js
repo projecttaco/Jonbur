@@ -28,7 +28,7 @@ class Dashboard extends Component {
     renderInfo = (sum) => {
         sum = Number(web3.utils.fromWei(sum, 'ether')).toFixed(4)
         return (
-            <div style={{ textAlign: 'center' }}>
+            <div className={'center summary'}>
                 <Title level={2} style={{ font: 'Bold 2.4em Avenir', color: 'white', marginBottom: '0px' }}>{sum} ETH</Title>
                 <div style={{ color: '#cecece', marginBottom: '1em' }}>≈ {formatter.format(sum * usd / 100)} USD</div>
             </div>
@@ -49,21 +49,21 @@ class Dashboard extends Component {
         const usdeth = 14700
         message.loading('Creating a new HODL...', 0);
         this.contracts.Jonbur.methods.deposit(withdrawDate.unix(), usdeth, '').send({ value: amount })
-        .on('transactionhash', hash => {
-        })
-        .on('confirmation', (confirmationNumber, receipt) => {
-        })
-        .on('receipt', receipt => {
-            message.destroy();
-            message.success('Successfully Jonbured!', 3);
-            console.log(receipt);
-            this.props.saveReceipt(receipt);
-        })
-        .on('error', error => {
-            message.destroy();
-            message.warning('Error occured', 3);
-            console.error(error);
-        })
+            .on('transactionhash', hash => {
+            })
+            .on('confirmation', (confirmationNumber, receipt) => {
+            })
+            .on('receipt', receipt => {
+                message.destroy();
+                message.success('Jonbur Successful!', 3);
+                console.log(receipt);
+                this.props.saveReceipt(receipt);
+            })
+            .on('error', error => {
+                message.destroy();
+                message.warning('Error occured', 3);
+                console.error(error);
+            })
         this.setState({
             visible: false,
         });
@@ -95,12 +95,11 @@ class Dashboard extends Component {
         // console.log(indexes);
         return (
             <div>
-                <div className="topBackground" />
+                <div className="topBackground">
+                    {sum && this.renderInfo(sum.value)}
+                </div>
                 <div className="bottom">
                     <div className="card">
-                        {/* <Title level={2} style={{ font: 'Bold 1.5em Avenir', color: 'white' }}>Dashboard</Title> */}
-                        {sum && this.renderInfo(sum.value)}
-                        {/* {[...data].reverse().map((v) => { return this.renderCard(v) })} */}
                         {indexes && [...indexes.value].reverse().map((index => { return (<JonburCard key={index} index={index} />) }))}
                         {indexes && indexes.value.length < 1 && <Empty><Button type="primary" onClick={this.showModal}>Create Jonbur Now</Button></Empty>}
                     </div>
