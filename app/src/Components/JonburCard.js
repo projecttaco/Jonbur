@@ -3,7 +3,7 @@ import { drizzleConnect } from "drizzle-react";
 import PropTypes from 'prop-types';
 import web3 from 'web3';
 import { formatter } from '../utils';
-import { Card, Typography, Button, Icon, Statistic, Modal, Spin, Skeleton } from 'antd';
+import { Card, Typography, Button, Icon, Statistic, Modal, Spin, Skeleton, message } from 'antd';
 const { Countdown } = Statistic;
 const usd = 14800;
 
@@ -15,11 +15,25 @@ class JonburCard extends Component {
     }
 
     withdraw  = () => {
-        this.contracts.Jonbur.methods.withdraw(this.props.index).send().then(reciept => console.log(reciept));
+        message.loading('Withdrawing funds...', 0);
+        this.contracts.Jonbur.methods.withdraw(this.props.index).send()
+        .on('transactionhash', hash => {
+        })
+        .on('confirmation', (confirmationNumber, receipt) => {
+        })
+        .on('receipt', receipt => {
+            message.destroy();
+            message.success('Withdrawal Successful!', 3);
+            console.log(receipt)
+        })
+        .on('error', error => {
+            message.destroy();
+            message.warning('Error occured', 3);
+            console.error(error);
+        })
     }
 
     renderDescription = (obj) => {
-        console.log(obj);
         const { dueDate, withdrawDate, spent } = obj;
         if (spent) {
             return `Emptied on ${withdrawDate.toDateString().substr(4)}`

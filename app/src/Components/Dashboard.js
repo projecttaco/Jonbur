@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { drizzleConnect } from "drizzle-react";
 import PropTypes from 'prop-types';
 import web3 from 'web3';
-import { Card, Spin, Typography, Button, Icon, Statistic, Modal, Empty } from 'antd';
+import { Card, Spin, Typography, Button, Icon, Statistic, Modal, Empty, message } from 'antd';
 import Deposit from './Deposit';
 import JonburCard from './JonburCard';
 import { formatter } from '../utils';
@@ -47,10 +47,23 @@ class Dashboard extends Component {
         const amount = web3.utils.toWei((inputValue - gasFee) + "", "ether");
         console.log(amount, gasFee);
         const usdeth = 14700
-        this.contracts.Jonbur.methods.deposit(withdrawDate.unix(), usdeth, '').send({ value: amount }).then(receipt => {
+        message.loading('Creating a new HODL...', 0);
+        this.contracts.Jonbur.methods.deposit(withdrawDate.unix(), usdeth, '').send({ value: amount })
+        .on('transactionhash', hash => {
+        })
+        .on('confirmation', (confirmationNumber, receipt) => {
+        })
+        .on('receipt', receipt => {
+            message.destroy();
+            message.success('Successfully Jonbured!', 3);
             console.log(receipt);
             this.props.saveReceipt(receipt);
-        });
+        })
+        .on('error', error => {
+            message.destroy();
+            message.warning('Error occured', 3);
+            console.error(error);
+        })
         this.setState({
             visible: false,
         });
