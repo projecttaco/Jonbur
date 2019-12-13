@@ -8,9 +8,10 @@ import Home from './Components/Home';
 import Deposit from './Components/DepositLegacy';
 import Dashboard from './Components/Dashboard';
 import Withdraw from './Components/Withdraw';
-import { Layout, Menu, Icon } from 'antd';
+import { Layout, Menu, Icon, Drawer } from 'antd';
 import LoadingContainer from './Components/LoadingContainer';
 import web3 from 'web3';
+import { Opera } from './images/opera.svg';
 const { Header, Content, Footer } = Layout;
 // const Caver = require('caver-js');
 // const caver = new Caver('https://api.baobab.klaytn.net:8651/');
@@ -26,6 +27,24 @@ class App extends Component {
       current: e.key
     })
   }
+
+  showDrawer = () => {
+    this.setState({
+      visible: true,
+    });
+  };
+
+  onClose = () => {
+    this.setState({
+      visible: false,
+    });
+  };
+
+  onChange = e => {
+    this.setState({
+      placement: e.target.value,
+    });
+  };
 
   renderContent = current => {
     switch (current) {
@@ -51,19 +70,19 @@ class App extends Component {
     return (
       <Layout className="layout">
         <Header style={{ padding: '0 25px', position: 'fixed', width: '100%', backgroundColor: 'transparent' }}>
-          <Icon type="menu" style={{ color: 'white', fontSize: '18px' }} />
+          <Icon type="menu" style={{ color: 'white', fontSize: '18px' }} onClick={this.showDrawer} />
           {/* <div className="logo">
             Jonbur.
           </div> */}
 
-          <div style={{ float: "right", color: "#ececec", textAlign: "right", fontSize: '12px'}}>
-            <div style={{ lineHeight:'48px', height: '32px', color: '#aeaeae' }}>
-              <Icon type="sketch"/> Ropsten Testnet
+          <div style={{ float: "right", color: "#ececec", textAlign: "right", fontSize: '12px' }}>
+            <div style={{ lineHeight: '48px', height: '32px', color: '#aeaeae' }}>
+              <Icon type="sketch" /> Ropsten Testnet
             </div>
-            <div style={{ lineHeight:'16px' }}>
+            <div style={{ lineHeight: '16px' }}>
               {account && `${account.substr(0, 6)}...${account.substr(account.length - 4, account.length)}`}
             </div>
-            <div style={{ lineHeight:'16px' }}>
+            <div style={{ lineHeight: '16px' }}>
               {balance && `${Number(web3.utils.fromWei(balance, "ether")).toFixed(4)} ETH`}
             </div>
             {/* <div>
@@ -72,12 +91,25 @@ class App extends Component {
           </div>
 
         </Header>
-        <Content style={{minHeight:'700px'}}>
+        <Content style={{ minHeight: '700px' }}>
           <LoadingContainer>
             {this.renderContent(current)}
           </LoadingContainer>
         </Content>
         {this.renderFooter(current)}
+
+        <Drawer
+          title="Basic Drawer"
+          placement={"left"}
+          closable={true}
+          onClose={this.onClose}
+          visible={this.state.visible}
+          witdh={'80%'}
+        >
+          <div className={'menuButton'}>Some Button...</div>
+          <div className={'menuButton'}>Some Button...</div>
+          <div className={'menuButton'}>Some Button...</div>
+        </Drawer>
       </Layout>
     );
   }

@@ -50,7 +50,7 @@ class JonburCard extends Component {
     renderButton = (obj) => {
         const { dueDate, withdrawDate, spent } = obj;
         if (spent) {
-            return <Button type="disabled"><Icon type="check" />Empty</Button>
+            return <Button type="dashed" disabled><Icon type="check" />Empty</Button>
         } else {
             if (dueDate < new Date()) {
                 return <Button type="primary" onClick={this.withdraw}><Icon type="unlock"/>Withdraw</Button>

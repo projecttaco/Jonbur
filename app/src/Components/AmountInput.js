@@ -30,7 +30,7 @@ class AmountInput extends Component {
             <Row>
                 <p style={{ float: 'right' }}>{`${account.substr(0, 6)}...${account.substr(account.length - 4, account.length)}`}</p><br/>
                 <h3 style={{ float: 'right' }}>Balance: {this.state.maxAmount}ETH</h3>
-                <Input step={0.01} min={0} max={this.state.maxAmount} value={inputValue} onChange={e => this.props.amountChange(e.target.value)} style={{ font: '2em' }} prefix="Ξ" suffix="ETH" />
+                <Input htmlType={'text'} format={"[0-9]*"} step={0.01} min={0} max={this.state.maxAmount} value={inputValue} onChange={e => this.props.amountChange(e.target.value)} style={{ font: '2em' }} prefix="Ξ" suffix="ETH" />
                 <Slider step={0.01} min={0} max={this.state.maxAmount} value={inputValue} onChange={e => this.props.amountChange(e)} style={{ margin: 20 }} marks={marks} />
             </Row>
         );

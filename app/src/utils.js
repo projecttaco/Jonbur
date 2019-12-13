@@ -1,7 +1,12 @@
 const formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 2
-  })
+  style: 'currency',
+  currency: 'USD',
+  minimumFractionDigits: 2
+})
 
-export { formatter };
+const getPrice = () => {
+  const url = 'https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD';
+  
+}
+
+export { formatter, getPrice };

@@ -93,3 +93,32 @@ body {
   transform: translate(-50%, -50%);
   text-align: center;
 }
+
+.browserButton {
+  height: 50px;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 50px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 6px;
+    margin: auto auto 20px;
+    cursor: pointer;
+    max-width: 400px;
+    padding: 0 30px;
+    min-width: 300px;
+}
+
+.menuButton {
+  height: 50px;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 50px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 6px;
+    margin: auto auto 20px;
+    cursor: pointer;
+    max-width: 400px;
+    padding: 0 30px;
+}
