@@ -8,48 +8,54 @@ contract Jonbur{
         uint ethusd;
         bool spent;
         string comment;
-        uint amount;
-        bool spent;
-        address hodlOwner;
+        address owner;
     }
     address public owner;
-    uint public hodlIndex;
+    uint public lastIndex;
     mapping(uint => Hodl) hodls;
-    mapping(address => uint[]) hodlers;
-    
-    event HodlerAdded(address _addr, string _comment);
-    event HodlerRewarded(address _addr);
+    mapping(address => uint[]) index;
+    mapping(address => uint) sum;
+
+    event NewHodl(address _addr, string _comment);
+    event DoneHodl(address _addr);
     
     constructor() public{
         owner = msg.sender;
-        hodlIndex = 0;
     }
     
-    function getHodlIndexes() view public returns (uint[] memory){
-        return hodlers[msg.sender];
+    function getHodlIndex() public view returns (uint[] memory){
+        return index[msg.sender];
     }
     
-    function getHodl(uint _index) view public returns (uint , uint, bool){
-        return (hodls[_index].date, hodls[_index].amount, hodls[_index].spent);
+    function getHodl(uint _index) public view returns (uint, uint, uint, uint, bool){
+        Hodl storage h = hodls[_index];
+        return (h.depositDate, h.withdrawDate, h.depositAmount, h.ethusd, h.spent);
     }
     
-    function getComment(uint _index) view public returns (string memory){
+    function getComment(uint _index) public view returns (string memory){
         return hodls[_index].comment;
     }
+
+    function getSum() public view returns (uint) {
+        return sum[msg.sender];
+    }
     
-    function deposit(uint _date, string memory _comment) public payable {
-        hodlers[msg.sender].push(hodlIndex);
-        hodls[hodlIndex] = Hodl(_date, _comment, msg.value, false, msg.sender);
-        hodlIndex++;
-        emit HodlerAdded(msg.sender, _comment);
+    function deposit(uint _depositDate, uint _ethusd, string memory _comment) public payable {
+        index[msg.sender].push(lastIndex);
+        hodls[lastIndex] = Hodl(_depositDate, 0, msg.value, _ethusd, false, _comment, msg.sender);
+        lastIndex++;
+        sum[msg.sender] += msg.value;
+        emit NewHodl(msg.sender, _comment);
     }
     
     function withdraw(uint _index) public {
-        require(hodls[_index].hodlOwner == msg.sender, "Invalid Jonbur");
-        require(hodls[_index].spent == false, "Already Rewarded");
-        require(hodls[_index].date <= block.timestamp, "Not yet");
-        msg.sender.transfer(hodls[_index].amount);
-        emit HodlerRewarded(msg.sender);
+        require(hodls[_index].owner == msg.sender, "Invalid owner");
+        require(hodls[_index].spent == false, "Withdrew Already");
+        require(hodls[_index].depositDate <= block.timestamp, "Not yet");
+        msg.sender.transfer(hodls[_index].depositAmount);
+        hodls[_index].withdrawDate = block.timestamp;
         hodls[_index].spent = true;
+        sum[msg.sender] -= hodls[_index].depositAmount;
+        emit DoneHodl(msg.sender);
     }
 }
