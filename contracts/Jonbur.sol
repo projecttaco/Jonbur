@@ -2,13 +2,16 @@ pragma solidity ^0.5.0;
 
 contract Jonbur{
     struct Hodl{
-        uint date;
+        uint depositDate;
+        uint withdrawDate;
+        uint depositAmount;
+        uint ethusd;
+        bool spent;
         string comment;
         uint amount;
         bool spent;
         address hodlOwner;
     }
-    
     address public owner;
     uint public hodlIndex;
     mapping(uint => Hodl) hodls;
