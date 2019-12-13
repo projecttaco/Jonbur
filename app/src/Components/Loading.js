@@ -1,4 +1,5 @@
 import React, { Component, Children } from 'react'
+import { Spin, Result, Button } from 'antd';
 
 class Loading extends Component {
     constructor(props, context) {
@@ -10,8 +11,12 @@ class Loading extends Component {
             return (
                 // Display a web3 warning.
                 <main>
-                    <h1><span role="img" aria-label="warning">⚠️</span></h1>
-                    <p>This browser has no connection to the Ethereum network. Please use the Chrome/FireFox extension MetaMask, or dedicated Ethereum browsers Mist or Parity.</p>
+                    <Result
+                        status="403"
+                        title="No Wallet Detected ⚠️"
+                        subTitle="This browser has no connection to the Ethereum network. Please use the Chrome/FireFox extension MetaMask, or dedicated Ethereum browsers Mist or Parity."
+                        extra={<Button type="primary">Back Home</Button>}
+                    />
                 </main>
             )
         }
@@ -23,9 +28,8 @@ class Loading extends Component {
 
         return (
             // Display a loading indicator.
-            <main>
-                <h1><span role="img" aria-label="setting">⚙️</span></h1>
-                <p>Loading dapp...</p>
+            <main className="center">
+                <Spin size={'large'} tip="Loading Accounts..." />
             </main>
         )
     }

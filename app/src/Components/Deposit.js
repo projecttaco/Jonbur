@@ -4,7 +4,7 @@ import { drizzleConnect } from "drizzle-react";
 import AmountInput from "./AmountInput";
 import DateInput from "./DateInput";
 import Summary from "./Summary";
-import { Card, Typography, Steps, Result, Button } from 'antd';
+import { Card, Typography, Steps, Result, Button, message } from 'antd';
 
 const { Title } = Typography;
 const { Step } = Steps;
@@ -41,7 +41,7 @@ class Deposit extends Component {
             <Result
                 status="success"
                 title="Successfully jonbured your ether!"
-                style={{padding: "48px 0"}}
+                style={{ padding: "48px 0" }}
                 subTitle={
                     <span>
                         <p>
@@ -65,26 +65,35 @@ class Deposit extends Component {
         const { showConfirmScreen, current } = this.props;
         return (
             <div>
-                <div className="topBackground" />
-                <div className="bottom">
-                    <div className="card">
-                        <Title level={2} style={{ font: 'Bold 3em Avenir', color: 'white' }}>{renderTitle(current, showConfirmScreen)}</Title>
-                        <Card style={{ boxShadow: '0px 3px 6px #00000029', borderRadius: '10px' }}>
-                            {showConfirmScreen ?
-                                this.renderResult() :
-                                <Steps size={'small'} direction="vertical" current={current} onChange={this.props.onChange}>
-                                    <Step title="Amount" description={current < 2 ? <AmountInput /> : null} />
-                                    <Step title="Date" description={current < 2 ? <DateInput /> : null} />
-                                    <Step title="Summary" description={current === 2 ? <Summary /> : null} />
-                                </Steps>
-                            }
-                        </Card>
-                    </div>
+                <Steps type="navigation" size="small" current={current} onChange={this.props.onChange}>
+                    <Step title="Amount" />
+                    <Step title="Date" />
+                    <Step title="Summary" />
+                </Steps>
+                <div className="steps-content">{steps[current]}</div>
+                <div className="steps-action">
+                    {current < steps.length - 1 && (
+                        <Button type="primary" onClick={() => this.onChange(current+1)}>
+                            Next
+            </Button>
+                    )}
+                    {current === steps.length - 1 && (
+                        <Button type="primary" onClick={() => message.success('Processing complete!')}>
+                            Done
+            </Button>
+                    )}
+                    {current > 0 && (
+                        <Button style={{ marginLeft: 8 }} onClick={() => this.onChange(current-1)}>
+                            Previous
+            </Button>
+                    )}
                 </div>
             </div>
         );
     }
 }
+
+const steps = [<AmountInput />, <DateInput />, <Summary />]
 
 const mapStateToProps = state => {
     return {
@@ -97,9 +106,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        reset: () => dispatch({type: 'RESET_DEPOSIT'}),
-        onChange: (current) => dispatch({type: 'UPDATE_STEP', value: current }),
-        gotoWithdraw: () => dispatch({ type: 'GOTO', value: '3'})
+        reset: () => dispatch({ type: 'RESET_DEPOSIT' }),
+        onChange: (current) => dispatch({ type: 'UPDATE_STEP', value: current }),
+        gotoWithdraw: () => dispatch({ type: 'GOTO', value: '3' })
     };
 }
 

@@ -5,7 +5,7 @@ import "./App.css";
 
 import { drizzleConnect } from 'drizzle-react';
 import Home from './Components/Home';
-import Deposit from './Components/Deposit';
+import Deposit from './Components/DepositLegacy';
 import Dashboard from './Components/Dashboard';
 import Withdraw from './Components/Withdraw';
 import { Layout, Menu, Icon } from 'antd';
@@ -43,14 +43,14 @@ class App extends Component {
   }
 
   renderFooter = current => {
-    if (current === '2' || current === '4') return <Footer style={{ textAlign: 'center' }}>Team TACO ©2019 Created by TEAM TACO</Footer>
-    else return <Footer style={{ textAlign: 'center', backgroundColor: '#003368', color: 'white' }}>Team TACO ©2019 Created by TEAM TACO</Footer>
+    if (current === '2' || current === '4') return <Footer style={{ marginTop: '30px', textAlign: 'center' }}>Team TACO ©2019 Created by TEAM TACO</Footer>
+    else return <Footer style={{ marginTop: '30px', textAlign: 'center', backgroundColor: '#003368', color: 'white' }}>Team TACO ©2019 Created by TEAM TACO</Footer>
   }
   render() {
     const { current, balance, account } = this.props;
     return (
       <Layout className="layout">
-        <Header style={{ padding: '0 25px', position: 'fixed', width: '100%', backgroundColor: '#003368' }}>
+        <Header style={{ padding: '0 25px', position: 'fixed', width: '100%', backgroundColor: 'transparent' }}>
           <Icon type="menu" style={{ color: 'white', fontSize: '18px' }} />
           {/* <div className="logo">
             Jonbur.
@@ -61,7 +61,10 @@ class App extends Component {
               <Icon type="sketch"/> Ropsten Testnet
             </div>
             <div style={{ lineHeight:'16px' }}>
-              {account && `\n${account.substr(0, 6)}...${account.substr(account.length - 4, account.length)}`}
+              {account && `${account.substr(0, 6)}...${account.substr(account.length - 4, account.length)}`}
+            </div>
+            <div style={{ lineHeight:'16px' }}>
+              {balance && `${Number(web3.utils.fromWei(balance, "ether")).toFixed(4)} ETH`}
             </div>
             {/* <div>
               {web3.utils.fromWei(balance, "ether")} ETH
@@ -69,7 +72,7 @@ class App extends Component {
           </div>
 
         </Header>
-        <Content>
+        <Content style={{minHeight:'700px'}}>
           <LoadingContainer>
             {this.renderContent(current)}
           </LoadingContainer>

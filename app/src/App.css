@@ -73,3 +73,12 @@ body {
   text-align: center;
   padding-top: 80px;
 }
+
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
