@@ -48,11 +48,11 @@ class JonburCard extends Component {
     }
 
     renderButton = (obj) => {
-        const date = obj.depositDate;
-        if (obj.spent) {
+        const { dueDate, withdrawDate, spent } = obj;
+        if (spent) {
             return <Button type="disabled"><Icon type="check" />Empty</Button>
         } else {
-            if (date < new Date()) {
+            if (dueDate < new Date()) {
                 return <Button type="primary" onClick={this.withdraw}><Icon type="unlock"/>Withdraw</Button>
             }
             return <Button type="disabled"><Icon type="lock" />Locked</Button>
@@ -95,7 +95,8 @@ class JonburCard extends Component {
                     {this.renderButton(obj)}
                 </div>
                 <div style={{ margin: -8, width: '60%' }}>
-                    <div style={{ color: 'ececec', fontSize: '10px', margin: '-6px 0 6px 0' }}>{obj.depositDate.toDateString().substr(4)}</div>
+                    {/* <div sytle={{ color: 'ececec', fontSize: '10px', margin: '-6px 0 6px 0' }}>{`#${Number(obj.index)+1}`}</div> */}
+                    <div style={{ color: 'ececec', fontSize: '10px', margin: '-6px 0 6px 0' }}>{`${obj.depositDate.toDateString().substr(4)}`}</div>
                     <div style={{ fontSize: '20px', fontWeight: '500' }}>{obj.depositAmount.toFixed(3)} ETH</div>
                     <div style={{ fontSize: '10px', color: '#c2c2c2' }}>{`≈${formatter.format(usd * obj.depositAmount / 100)} USD`} {this.renderProfit(obj)}</div>
                 </div>
