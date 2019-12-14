@@ -26,7 +26,8 @@ class Dashboard extends Component {
     }
 
     renderInfo = (sum) => {
-        sum = Number(web3.utils.fromWei(sum, 'ether')).toFixed(4)
+        sum = Number(web3.utils.fromWei(sum, 'ether'));
+        sum = sum > 1000 ? sum.toFixed(2): sum.toFixed(4);
         return (
             <div className={'center summary'}>
                 <Title level={2} style={{ font: 'Bold 2.4em Avenir', color: 'white', marginBottom: '0px' }}>{sum} ETH</Title>
