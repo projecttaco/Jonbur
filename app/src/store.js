@@ -71,7 +71,7 @@ const depositReducer = (state = initialState, action) => {
     }
 }
 
-const menuReducer = (state = { current: "2" }, action) => {
+const menuReducer = (state = { current: "1" }, action) => {
     switch (action.type) {
         case 'GOTO':
             return update(state, { current: action.value });

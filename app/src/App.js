@@ -75,7 +75,7 @@ class App extends Component {
   renderFooter = () => {
     return <Footer style={{ marginTop: '30px', textAlign: 'center' }}>Team TACO ©2019 Created by TEAM TACO</Footer>
   }
-  
+
   render() {
     const { current, balance, account, networkId } = this.props;
     return (
@@ -111,10 +111,10 @@ class App extends Component {
             closable={true}
             onClose={this.onClose}
             visible={this.state.visible}
-            witdh={'80%'}
+            witdh={320}
           >
-            <div className={'menuButton'} onClick={()=>{this.props.goto(1)}}>Home</div>
-            <div className={'menuButton'} onClick={()=>{this.props.goto(2)}}>Dashboard</div>
+            <div className={'menuButton'} onClick={()=>{this.props.goto('1'); this.onClose();}}>Home</div>
+            <div className={'menuButton'} onClick={()=>{this.props.goto('2'); this.onClose();}}>Dashboard</div>
             <div className={'menuButton'}>Blog</div>
           </Drawer>
         </Layout>
