@@ -5,13 +5,10 @@ import "./App.css";
 
 import { drizzleConnect } from 'drizzle-react';
 import Home from './Components/Home';
-import Deposit from './Components/DepositLegacy';
 import Dashboard from './Components/Dashboard';
-import Withdraw from './Components/Withdraw';
-import { Layout, Menu, Icon, Drawer } from 'antd';
+import { Layout, Icon, Drawer } from 'antd';
 import LoadingContainer from './Components/LoadingContainer';
 import web3 from 'web3';
-import { Opera } from './images/opera.svg';
 const { Header, Content, Footer } = Layout;
 // const Caver = require('caver-js');
 // const caver = new Caver('https://api.baobab.klaytn.net:8651/');
@@ -21,9 +18,9 @@ const { Header, Content, Footer } = Layout;
 class App extends Component {
   constructor(props) {
     super(props);
-  }
-  state = {
-    current: '2'
+    this.state = {
+      current: '2'
+    }
   }
   chanceContent = e => {
     this.setState({
@@ -61,11 +58,11 @@ class App extends Component {
   }
 
   renderNetwork = networkId => {
-    if (networkId == 1) {
+    if (networkId === 1) {
       return 'Ethereum Mainnet'
-    } else if (networkId == 3) {
+    } else if (networkId === 3) {
       return 'Ropsten Testnet'
-    } else if (networkId == 5777) {
+    } else if (networkId === 5777) {
       return 'Ganache Testnet'
     } else {
       return 'No Network Detected'

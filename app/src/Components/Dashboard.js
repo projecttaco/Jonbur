@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import { drizzleConnect } from "drizzle-react";
 import PropTypes from 'prop-types';
 import web3 from 'web3';
-import { Card, Spin, Typography, Button, Icon, Statistic, Modal, Empty, message } from 'antd';
+import { Spin, Typography, Button, Icon, Modal, Empty, message } from 'antd';
 import Deposit from './Deposit';
 import JonburCard from './JonburCard';
 import { formatter } from '../utils';
 const { Title } = Typography;
-const { Countdown } = Statistic;
 
 // TODO: ETH-USD 가져오기
 const usd = 5708;
@@ -104,9 +103,9 @@ class Dashboard extends Component {
                         {indexes && [...indexes.value].reverse().map((index => { return (<JonburCard key={index} index={index} />) }))}
                         {indexes && indexes.value.length < 1 && <Empty><Button type="primary" onClick={this.showModal}>Create Jonbur Now</Button></Empty>}
                     </div>
-                    <a href="#" onClick={this.showModal} className="float">
+                    <button onClick={this.showModal} className="float">
                         <Icon type="plus" />
-                    </a>
+                    </button>
                 </div>
                 <Modal
                     title="Request Withdraw"

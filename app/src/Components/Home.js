@@ -1,14 +1,9 @@
 import React, { Component } from "react";
-import { Row, Col, Card, Button } from 'antd';
 import { drizzleConnect } from 'drizzle-react';
 import { ReactComponent as Logo } from '../images/graph.svg';
 
 
 class Home extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div>

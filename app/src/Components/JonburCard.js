@@ -3,7 +3,7 @@ import { drizzleConnect } from "drizzle-react";
 import PropTypes from 'prop-types';
 import web3 from 'web3';
 import { formatter } from '../utils';
-import { Card, Typography, Button, Icon, Statistic, Modal, Spin, Skeleton, message } from 'antd';
+import { Card, Button, Icon, Statistic, Skeleton, message } from 'antd';
 const { Countdown } = Statistic;
 const usd = 14800;
 
@@ -48,7 +48,7 @@ class JonburCard extends Component {
     }
 
     renderButton = (obj) => {
-        const { dueDate, withdrawDate, spent } = obj;
+        const { dueDate, spent } = obj;
         if (spent) {
             return <Button type="dashed" disabled><Icon type="check" />Empty</Button>
         } else {

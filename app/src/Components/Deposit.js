@@ -4,26 +4,24 @@ import { drizzleConnect } from "drizzle-react";
 import AmountInput from "./AmountInput";
 import DateInput from "./DateInput";
 import Summary from "./Summary";
-import { Card, Typography, Steps, Result, Button, message } from 'antd';
-
-const { Title } = Typography;
+import { Steps, Result, Button, message } from 'antd';
 const { Step } = Steps;
 
-const renderTitle = (current, visibleResult) => {
-    if (visibleResult) {
-        return `You're all set.`
-    }
-    switch (current) {
-        case 0:
-            return 'Keep your ethereum.'
-        case 1:
-            return 'Select the date.'
-        case 2:
-            return 'Review your transaction.'
-        default:
-            return 'Keep your ethereum'
-    }
-}
+// const renderTitle = (current, visibleResult) => {
+//     if (visibleResult) {
+//         return `You're all set.`
+//     }
+//     switch (current) {
+//         case 0:
+//             return 'Keep your ethereum.'
+//         case 1:
+//             return 'Select the date.'
+//         case 2:
+//             return 'Review your transaction.'
+//         default:
+//             return 'Keep your ethereum'
+//     }
+// }
 
 class Deposit extends Component {
     onChange = current => {
@@ -62,7 +60,7 @@ class Deposit extends Component {
     }
 
     render() {
-        const { showConfirmScreen, current } = this.props;
+        const { current } = this.props;
         return (
             <div>
                 <Steps type="navigation" size="small" current={current} onChange={this.props.onChange}>

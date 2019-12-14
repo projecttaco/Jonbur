@@ -21,10 +21,10 @@ class Loading extends Component {
                                     background: "linear-gradient(90deg, #e53935 0%,#e35d5b 100% )",
                                     color: "white",
                                 }}>
-                                    <img style={{ height: '24px', marginRight: '10px' }} src={require('../images/opera.png')} /> Open with Opera
+                                    <img style={{ height: '24px', marginRight: '10px' }} alt={'Opera'} src={require('../images/opera.png')} /> Open with Opera
                                 </div>
                                 <div className={'browserButton'}>
-                                    <img style={{ height: '24px', marginRight: '10px' }} src={require('../images/metamask.png')} /> Open with Metamask
+                                    <img style={{ height: '24px', marginRight: '10px' }} alt={'Metamask'} src={require('../images/metamask.png')} /> Open with Metamask
                                 </div>
                                 <Button type="primary">Back Home</Button>
                             </div>}

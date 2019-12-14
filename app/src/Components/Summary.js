@@ -3,7 +3,6 @@ import { Row, Col, Typography, Input, Button, Modal, Progress } from 'antd';
 import web3 from 'web3';
 import { drizzleConnect } from "drizzle-react";
 import PropTypes from 'prop-types'
-import moment from 'moment'
 
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -45,7 +44,7 @@ class Summary extends Component {
     }
 
     render() {
-        const { endTime, comment, commentLimit, gasFee } = this.state;
+        const { comment, commentLimit, gasFee } = this.state;
         const { inputValue, modal, withdrawDate } = this.props;
         const balance = inputValue * 1 - gasFee;
 
