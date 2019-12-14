@@ -19,6 +19,9 @@ const { Header, Content, Footer } = Layout;
 // console.log(caver);
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+  }
   state = {
     current: '2'
   }
@@ -51,66 +54,71 @@ class App extends Component {
       case '1':
         return <Home />
       case '2':
-        // return <Deposit visibleResult={false} />
         return <Dashboard />
-      // return <Withdraw />
-      case '3':
-        return <Withdraw />
       default:
         return <Home />
     }
   }
 
-  renderFooter = current => {
-    if (current === '2' || current === '4') return <Footer style={{ marginTop: '30px', textAlign: 'center' }}>Team TACO ©2019 Created by TEAM TACO</Footer>
-    else return <Footer style={{ marginTop: '30px', textAlign: 'center', backgroundColor: '#003368', color: 'white' }}>Team TACO ©2019 Created by TEAM TACO</Footer>
+  renderNetwork = networkId => {
+    if (networkId == 1) {
+      return 'Ethereum Mainnet'
+    } else if (networkId == 3) {
+      return 'Ropsten Testnet'
+    } else if (networkId == 5777) {
+      return 'Ganache Testnet'
+    } else {
+      return 'No Network Detected'
+    }
   }
+
+  renderFooter = () => {
+    return <Footer style={{ marginTop: '30px', textAlign: 'center' }}>Team TACO ©2019 Created by TEAM TACO</Footer>
+  }
+  
   render() {
-    const { current, balance, account } = this.props;
+    const { current, balance, account, networkId } = this.props;
     return (
-      <Layout className="layout">
-        <Header style={{ padding: '0 25px', position: 'fixed', width: '100%', backgroundColor: 'transparent' }}>
-          <Icon type="menu" style={{ color: 'white', fontSize: '18px' }} onClick={this.showDrawer} />
-          {/* <div className="logo">
-            Jonbur.
-          </div> */}
-
-          <div style={{ float: "right", color: "#ececec", textAlign: "right", fontSize: '12px' }}>
-            <div style={{ lineHeight: '48px', height: '32px', color: '#aeaeae' }}>
-              <Icon type="sketch" /> Ropsten Testnet
-            </div>
-            <div style={{ lineHeight: '16px' }}>
-              {account && `${account.substr(0, 6)}...${account.substr(account.length - 4, account.length)}`}
-            </div>
-            <div style={{ lineHeight: '16px' }}>
-              {balance && `${Number(web3.utils.fromWei(balance, "ether")).toFixed(4)} ETH`}
-            </div>
-            {/* <div>
-              {web3.utils.fromWei(balance, "ether")} ETH
+      <LoadingContainer>
+        <Layout className="layout">
+          <Header style={{ padding: '0 25px', position: 'fixed', width: '100%', backgroundColor: 'transparent' }}>
+            <Icon type="menu" style={{ color: 'white', fontSize: '18px' }} onClick={this.showDrawer} />
+            {/* <div className="logo">
+              Jonbur.
             </div> */}
-          </div>
 
-        </Header>
-        <Content style={{ minHeight: '700px' }}>
-          <LoadingContainer>
+            <div style={{ float: "right", color: "#ececec", textAlign: "right", fontSize: '12px' }}>
+              <div style={{ lineHeight: '48px', height: '32px', color: '#aeaeae' }}>
+                <Icon type="sketch" /> {networkId && this.renderNetwork(networkId)}
+              </div>
+              <div style={{ lineHeight: '16px' }}>
+                {account && `${account.substr(0, 6)}...${account.substr(account.length - 4, account.length)}`}
+              </div>
+              <div style={{ lineHeight: '16px' }}>
+                {balance && `${Number(web3.utils.fromWei(balance, "ether")).toFixed(4)} ETH`}
+              </div>
+            </div>
+
+          </Header>
+          <Content style={{ minHeight: '700px' }}>
             {this.renderContent(current)}
-          </LoadingContainer>
-        </Content>
-        {this.renderFooter(current)}
+          </Content>
+          {this.renderFooter(current)}
 
-        <Drawer
-          title="Basic Drawer"
-          placement={"left"}
-          closable={true}
-          onClose={this.onClose}
-          visible={this.state.visible}
-          witdh={'80%'}
-        >
-          <div className={'menuButton'}>Some Button...</div>
-          <div className={'menuButton'}>Some Button...</div>
-          <div className={'menuButton'}>Some Button...</div>
-        </Drawer>
-      </Layout>
+          <Drawer
+            title="Menu"
+            placement={"left"}
+            closable={true}
+            onClose={this.onClose}
+            visible={this.state.visible}
+            witdh={'80%'}
+          >
+            <div className={'menuButton'} onClick={()=>{this.props.goto(1)}}>Home</div>
+            <div className={'menuButton'} onClick={()=>{this.props.goto(2)}}>Dashboard</div>
+            <div className={'menuButton'}>Blog</div>
+          </Drawer>
+        </Layout>
+      </LoadingContainer>
     );
   }
 }
@@ -118,6 +126,7 @@ class App extends Component {
 const mapStateToProps = state => {
   return {
     state: state,
+    networkId: state.web3.networkId,
     current: state.menu.current,
     account: state.accounts[0],
     balance: state.accountBalances[state.accounts[0]],
