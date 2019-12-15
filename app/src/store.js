@@ -101,6 +101,7 @@ function* fetchUSD() {
             let usd = res.data.USD;
             if (usd) {
                 // console.log(`eth_usd: ${usd}`);
+                // 여기서는 usd를 int로 써야하기 때문에 * 100을 한다
                 return usd * 100;
             }
         })

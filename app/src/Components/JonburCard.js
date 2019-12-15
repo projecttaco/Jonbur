@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { drizzleConnect } from "drizzle-react";
 import PropTypes from "prop-types";
 import web3 from "web3";
-import { formatter, getPrice } from "../utils";
+import { formatter } from "../utils";
 import { Card, Button, Icon, Statistic, Skeleton, message } from "antd";
 const { Countdown } = Statistic;
 
