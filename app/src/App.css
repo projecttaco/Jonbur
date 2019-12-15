@@ -143,4 +143,5 @@ body {
   width: 50%;
   height: auto;
   margin-top: 10px;
+  max-width: 200px;
 }
