@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { drizzleConnect } from "drizzle-react";
 import PropTypes from 'prop-types';
 import web3 from 'web3';
-import { Spin, Typography, Button, Icon, Modal, Empty, message } from 'antd';
+import { Spin, Typography, Button, Icon, Modal, Empty } from 'antd';
 import Deposit from './Deposit';
 import JonburCard from './JonburCard';
 import { formatter } from '../utils';
@@ -19,11 +19,6 @@ class Dashboard extends Component {
         this.sumKey = this.contracts.Jonbur.methods.getSum.cacheCall();
     }
 
-    state = {
-        visible: false,
-        gasFee: 0.002108,
-    }
-
     renderInfo = (sum) => {
         sum = Number(web3.utils.fromWei(sum, 'ether'));
         sum = sum > 1000 ? sum.toFixed(2) : sum.toFixed(4);
@@ -35,53 +30,8 @@ class Dashboard extends Component {
         )
     }
 
-    showModal = () => {
-        this.setState({
-            visible: true,
-        });
-    };
-
-    handleOk = e => {
-        const { inputValue, withdrawDate } = this.props;
-        const { gasFee } = this.state;
-        const amount = web3.utils.toWei((inputValue - gasFee) + "", "ether");
-        console.log(amount, gasFee);
-        const usdeth = 14700
-        // message.loading('Creating a new HODL...', 0);
-        this.contracts.Jonbur.methods.deposit(withdrawDate.unix(), usdeth, '').send({ value: amount })
-            .on('transactionhash', hash => {
-                message.loading('Creating a new HODL...', 3);
-            })
-            .on('confirmation', (confirmationNumber, receipt) => {
-            })
-            .on('receipt', receipt => {
-                message.destroy();
-                message.success('Jonbur Successful!', 3);
-                console.log(receipt);
-                this.props.saveReceipt(receipt);
-            })
-            .on('error', error => {
-                message.destroy();
-                message.warning('Error occured', 3);
-                console.error(error);
-            })
-        this.setState({
-            visible: false,
-        });
-    };
-
-    handleCancel = e => {
-        console.log(e);
-        this.setState({
-            visible: false,
-        });
-    };
-
     renderModalTitle = () => {
         const { current } = this.props;
-        // if (visibleResult) {
-        //     return `You're all set.`
-        // }
         switch (current) {
             case 0:
                 return 'Set the amount.'
@@ -95,6 +45,7 @@ class Dashboard extends Component {
     }
 
     render() {
+        const { showModal, hideModal } = this.props;
         if (!(this.dataKey in this.props.Jonbur.getHodlIndex || this.sumKey in this.props.Jonbur.getSum)) {
             return (
                 <div>
@@ -119,17 +70,16 @@ class Dashboard extends Component {
                 <div className="bottom">
                     <div className="card">
                         {indexes && [...indexes.value].reverse().map((index => { return (<JonburCard key={index} index={index} />) }))}
-                        {indexes && indexes.value.length < 1 && <Empty><Button type="primary" onClick={this.showModal}>Create Jonbur Now</Button></Empty>}
+                        {indexes && indexes.value.length < 1 && <Empty><Button type="primary" onClick={showModal}>Create Jonbur Now</Button></Empty>}
                     </div>
-                    <button onClick={this.showModal} className="float">
+                    <button onClick={showModal} className="float">
                         <Icon type="plus" />
                     </button>
                 </div>
                 <Modal
                     title={this.renderModalTitle()}
-                    visible={this.state.visible}
-                    onOk={this.handleOk}
-                    onCancel={this.handleCancel}
+                    visible={this.props.modal}
+                    onCancel={hideModal}
                     footer={null}
                 >
                     <Deposit />
@@ -147,12 +97,15 @@ const mapStateToProps = state => {
         inputValue: state.deposit.amount,
         withdrawDate: state.deposit.withdrawDate,
         current: state.deposit.current,
+        modal: state.deposit.modal, 
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         saveReceipt: (receipt) => dispatch({ type: 'SAVE_RECEIPT', value: receipt }),
+        showModal: () => dispatch({ type: 'SHOW_MODAL' }),
+        hideModal: () => dispatch({ type: 'HIDE_MODAL' }),
     };
 }
 

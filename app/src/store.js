@@ -59,6 +59,7 @@ const depositReducer = (state = initialState, action) => {
         case 'RESET_DEPOSIT':
             return update(state, { amount: 0, inputError: false, showConfirmScreen: false, current: 0 });
         case 'UPDATE_STEP':
+            console.log(action.value);
             return update(state, { current: action.value });
         case 'SAVE_RECEIPT':
             return update(state, { receipt: action.value });

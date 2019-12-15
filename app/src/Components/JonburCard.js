@@ -22,12 +22,10 @@ class JonburCard extends Component {
         .on('confirmation', (confirmationNumber, receipt) => {
         })
         .on('receipt', receipt => {
-            // message.destroy();
             message.success('Withdrawal Successful!', 3);
             console.log(receipt)
         })
         .on('error', error => {
-            message.destroy();
             message.warning('Error occured', 3);
             console.error(error);
         })

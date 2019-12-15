@@ -31,7 +31,8 @@ class Summary extends Component {
 
     onConfirm = e => {
         const { inputValue, withdrawDate } = this.props;
-        const { gasFee } = this.state;
+        // const { gasFee } = this.state;
+        const gasFee = 0;
         const amount = web3.utils.toWei((inputValue - gasFee) + "", "ether");
         console.log(amount, gasFee);
         this.props.showModal();
@@ -99,7 +100,7 @@ class Summary extends Component {
                         Go Back
                     </Button>
                 </Col> */}
-                <Modal 
+                {/* <Modal 
                 centered 
                 visible={modal} 
                 closable={false}
@@ -126,7 +127,7 @@ class Summary extends Component {
                     <p style={{textAlign: 'center'}}>
                         Pending transaction...
                     </p>
-                </Modal>
+                </Modal> */}
             </Row>
         );
     }

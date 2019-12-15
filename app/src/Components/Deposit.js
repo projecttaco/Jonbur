@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-
 import { drizzleConnect } from "drizzle-react";
+import PropTypes from 'prop-types';
+import web3 from 'web3';
 import AmountInput from "./AmountInput";
 import DateInput from "./DateInput";
 import Summary from "./Summary";
@@ -8,6 +9,10 @@ import { Steps, Result, Button, message } from 'antd';
 const { Step } = Steps;
 
 class Deposit extends Component {
+    constructor(props, context) {
+        super(props);
+        this.contracts = context.drizzle.contracts;
+    }
     onChange = current => {
         console.log('onChange:', current);
         this.setState({ current });
@@ -43,6 +48,38 @@ class Deposit extends Component {
         )
     }
 
+    onConfirm = () => {
+        // message.success('Processing complete!')
+        const { inputValue, withdrawDate } = this.props;
+        // TODO: estimate gas fee
+        const gasFee = 0.002108;
+        const amount = web3.utils.toWei((inputValue - gasFee) + "", "ether");
+        console.log(amount, gasFee);
+        const usdeth = 14700
+        // message.loading('Creating a new HODL...', 0);
+        this.contracts.Jonbur.methods.deposit(withdrawDate.unix(), usdeth, '').send({ value: amount })
+            .on('transactionhash', hash => {
+                // message.loading('Creating a new HODL...', 3);
+            })
+            .on('confirmation', (confirmationNumber, receipt) => {
+                // message.loading('Confirming a new HODL...', 3);
+            })
+            .on('receipt', receipt => {
+                // reset modal step to 0
+                this.props.onChange(0)
+                message.success('Jonbur Successful!', 3);
+                console.log(receipt);
+                this.props.saveReceipt(receipt);
+            })
+            .on('error', error => {
+                // reset modal step to 0
+                this.props.onChange(0)
+                // message.warning('Error occured', 3);
+                console.error(error);
+            })
+        this.props.hideModal();
+    }
+
     render() {
         const { current } = this.props;
         return (
@@ -60,7 +97,7 @@ class Deposit extends Component {
                         </Button>
                     )}
                     {current === steps.length - 1 && (
-                        <Button type="primary" style={{ float: 'right', margin: '10px'}} onClick={() => message.success('Processing complete!')}>
+                        <Button type="primary" style={{ float: 'right', margin: '10px'}} onClick={this.onConfirm}>
                             Confirm
                         </Button>
                     )}
@@ -83,6 +120,8 @@ const mapStateToProps = state => {
         showConfirmScreen: state.deposit.showConfirmScreen,
         current: state.deposit.current,
         receipt: state.deposit.receipt,
+        inputValue: state.deposit.amount,
+        withdrawDate: state.deposit.withdrawDate,
     };
 };
 
@@ -90,8 +129,13 @@ const mapDispatchToProps = dispatch => {
     return {
         reset: () => dispatch({ type: 'RESET_DEPOSIT' }),
         onChange: (current) => dispatch({ type: 'UPDATE_STEP', value: current }),
-        gotoWithdraw: () => dispatch({ type: 'GOTO', value: '3' })
+        showModal: () => dispatch({ type: 'SHOW_MODAL' }),
+        hideModal: () => dispatch({ type: 'HIDE_MODAL' }),
     };
+}
+
+Deposit.contextTypes = {
+    drizzle: PropTypes.object
 }
 
 export default drizzleConnect(Deposit, mapStateToProps, mapDispatchToProps);
