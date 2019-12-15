@@ -82,10 +82,19 @@ class JonburCard extends Component {
     renderProfit = obj => {
         const { ethusd, depositAmount } = obj;
         const { usd } = this.props;
-        var color = ethusd < usd ? "green" : "red";
-        var icon = ethusd < usd ? "caret-up" : "caret-down";
-        // TODO: profit 계산하기
-        var profit = Math.abs(ethusd - usd) * depositAmount;
+        var color;
+        var icon;
+        if (ethusd === usd) {
+            color = "gray";
+            icon = "minus"
+        } else if (ethusd < usd) {
+            color = "green";
+            icon = "caret-up";
+        } else {
+            color = "red";
+            icon = "caret-down";
+        }
+        var profit = Math.abs(ethusd - usd) / 100 * depositAmount;
         return (
             <span style={{ color: color }}>
                 {" "}
@@ -171,7 +180,6 @@ class JonburCard extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         index: ownProps.index,
-        state: state,
         Jonbur: state.contracts.Jonbur,
         account: state.accounts[0],
         usd: state.main.usd,
