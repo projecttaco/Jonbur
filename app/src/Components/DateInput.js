@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, DatePicker, TimePicker } from 'antd';
+import { DatePicker, TimePicker } from 'antd';
 import { drizzleConnect } from "drizzle-react";
 // import moment from 'moment';
 
@@ -22,7 +22,7 @@ class DateInput extends Component {
         // const { year, month, day, hour, minute, second } = this.props;
         // console.log(withdrawDate);
         return (
-            <Row style={{textAlign:'left'}}>
+            <div style={{textAlign:'left'}}>
                 <div style={{margin:'20px auto'}}>
                     <h3 style={{display:'inline'}}>Pick a date: </h3>
                     <DatePicker style={{float:'right'}} defaultValue={inputDate} onChange={e => this.props.dateChange(e)}/>
@@ -31,25 +31,18 @@ class DateInput extends Component {
                     <h3 style={{display:'inline'}}>Set the time: </h3>
                     <TimePicker style={{float:'right'}} defaultValue={inputTime} onChange={e => this.props.timeChange(e)}/>
                 </div>
-            </Row>
+            </div>
         );
     }
 }
 
 const mapStateToProps = state => {
     return {
-        state: state,
         account: state.accounts[0],
         balance: state.accountBalances[state.accounts[0]],
         inputDate: state.deposit.date,
         inputTime: state.deposit.time,
-        // year : state.deposit.year,
-        // month : state.deposit.month,
-        // day : state.deposit.day,
-        // hour : state.deposit.hour,
-        // minute : state.deposit.minute,
-        // second : state.deposit.second,
-        // withdrawDate: state.deposit.withdrawDate,
+        withdrawDate: state.deposit.withdrawDate,
     };
 };
 
