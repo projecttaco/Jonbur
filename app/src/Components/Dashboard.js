@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { drizzleConnect } from "drizzle-react";
 import PropTypes from 'prop-types';
 import web3 from 'web3';
-import { Spin, Typography, Button, Icon, Modal, Empty } from 'antd';
+import { Spin, Typography, Button, Icon, Modal, Empty, Card, Skeleton } from 'antd';
 import Deposit from './Deposit';
 import JonburCard from './JonburCard';
 import { formatter } from '../utils';
@@ -53,8 +53,24 @@ class Dashboard extends Component {
         }
     }
 
+    renderDummy = () => {
+        return (
+            <Card
+                style={{
+                    boxShadow: "0px 3px 6px #00000029",
+                    borderRadius: "10px",
+                    maxWidth: "600px",
+                    margin: "auto",
+                    marginBottom: "10px"
+                }}
+            >
+                <Skeleton active paragraph={{ rows: 1 }} />
+            </Card>
+        );
+    }
+
     render() {
-        const { showModal, hideModal, Jonbur } = this.props;
+        const { showModal, hideModal, Jonbur, processing } = this.props;
         if (!(this.dataKey in Jonbur.getHodlIndex || this.sumKey in Jonbur.getSum)) {
             return (
                 <div>
@@ -78,8 +94,9 @@ class Dashboard extends Component {
                 </div>
                 <div className="bottom">
                     <div className="card">
+                        {processing && this.renderDummy()}
                         {indexes && [...indexes.value].reverse().map((index => { return (<JonburCard key={index} index={index} />) }))}
-                        {indexes && indexes.value.length < 1 && <Empty><Button type="primary" onClick={showModal}>Create Jonbur Now</Button></Empty>}
+                        {!processing && indexes && indexes.value.length < 1 && <Empty><Button type="primary" onClick={showModal}>Create Jonbur Now</Button></Empty>}
                     </div>
                     <button onClick={showModal} className="float">
                         <Icon type="plus" />
@@ -108,6 +125,7 @@ const mapStateToProps = state => {
         current: state.deposit.current,
         modal: state.deposit.modal,
         usd: state.main.usd,
+        processing: state.deposit.processing,
     };
 };
 

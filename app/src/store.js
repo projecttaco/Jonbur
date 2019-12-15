@@ -22,6 +22,7 @@ const initialState = {
     minute: moment().minute(),
     second: moment().second(),
     withdrawDate: moment(),
+    processing: false,
 }
 
 const update = (state, ...args) => {
@@ -35,7 +36,7 @@ const depositReducer = (state = initialState, action) => {
             var amount;
             var inputError = false;
             if (action.value === '') {
-                return update(state, { amount: ''})
+                return update(state, { amount: '' })
             }
             try {
                 amount = parseFloat(action.value);
@@ -71,6 +72,11 @@ const depositReducer = (state = initialState, action) => {
             return update(state, { modal: true });
         case 'HIDE_MODAL':
             return update(state, { modal: false });
+        case 'SHOW_DUMMY':
+            console.log('he')
+            return update(state, { processing: true });
+        case 'HIDE_DUMMY':
+            return update(state, { processing: false })
         default:
             return state;
     }

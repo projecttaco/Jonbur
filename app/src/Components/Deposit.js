@@ -60,16 +60,18 @@ class Deposit extends Component {
             .on('transactionhash', hash => {
                 message.loading('Creating a new HODL...', 0);
                 console.log(hash);
+                this.props.showDummy();
                 this.props.hideModal();
             })
             .on('confirmation', (confirmationNumber, receipt) => {
-                // console.log(confirmationNumber, receipt);
+                console.log(confirmationNumber, receipt);
             })
             .on('receipt', receipt => {
                 message.destroy();
                 message.success('Jonbur Successful!');
                 console.log(receipt);
                 // this.props.saveReceipt(receipt);
+                this.props.hideDummy();
             })
             .on('error', error => {
                 message.destroy();
@@ -80,6 +82,7 @@ class Deposit extends Component {
                     message.warning('Error occured');
                     console.log(error);
                 }
+                this.props.hideDummy();
             })
 
         this.props.hideModal();
@@ -137,6 +140,8 @@ const mapDispatchToProps = dispatch => {
         onChange: (current) => dispatch({ type: 'UPDATE_STEP', value: current }),
         showModal: () => dispatch({ type: 'SHOW_MODAL' }),
         hideModal: () => dispatch({ type: 'HIDE_MODAL' }),
+        showDummy: () => dispatch({ type: 'SHOW_DUMMY' }),
+        hideDummy: () => dispatch({ type: 'HIDE_DUMMY' }),
     };
 }
 
