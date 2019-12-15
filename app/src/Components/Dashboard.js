@@ -64,7 +64,7 @@ class Dashboard extends Component {
                     marginBottom: "10px"
                 }}
             >
-                <Skeleton active paragraph={{ rows: 1 }} />
+                <Skeleton active paragraph={{ rows: 1 }}/>
             </Card>
         );
     }

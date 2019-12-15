@@ -145,3 +145,7 @@ body {
   margin-top: 10px;
   max-width: 200px;
 }
+
+.ant-skeleton-active {
+  margin: -15px auto;
+}

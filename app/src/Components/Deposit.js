@@ -55,12 +55,12 @@ class Deposit extends Component {
         const gasFee = 0;
         const amount = web3.utils.toWei((inputValue - gasFee) + "", "ether");
         this.props.onChange(0);
-        // message.loading('Creating a new HODL...', 0);
+        message.loading('Creating a new HODL...', 0);
+        this.props.showDummy();
         this.contracts.Jonbur.methods.deposit(withdrawDate.unix(), usd, '').send({ value: amount })
             .on('transactionhash', hash => {
                 message.loading('Creating a new HODL...', 0);
                 console.log(hash);
-                this.props.showDummy();
                 this.props.hideModal();
             })
             .on('confirmation', (confirmationNumber, receipt) => {
