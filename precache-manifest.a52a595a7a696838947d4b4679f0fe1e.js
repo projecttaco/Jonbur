@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "5620c7943220f70df775",
+    "revision": "52fa00c62d13b8169c83",
     "url": "/jonbur/static/css/main.c171bff9.chunk.css"
   },
   {
-    "revision": "5620c7943220f70df775",
-    "url": "/jonbur/static/js/main.5620c794.chunk.js"
+    "revision": "52fa00c62d13b8169c83",
+    "url": "/jonbur/static/js/main.52fa00c6.chunk.js"
   },
   {
     "revision": "e75fedbfe17071150656",
@@ -28,7 +28,7 @@ self.__precacheManifest = [
     "url": "/jonbur/static/media/graph.37029eff.svg"
   },
   {
-    "revision": "de6b580e6b0e7b479a8ec69598306d45",
+    "revision": "6673e825f1811c93754ccbb094ae33b2",
     "url": "/jonbur/index.html"
   }
 ];
