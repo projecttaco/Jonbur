@@ -34,6 +34,9 @@ const depositReducer = (state = initialState, action) => {
             // return Object.assign({}, state, { amount: action.value });
             var amount;
             var inputError = false;
+            if (action.value === '') {
+                return update(state, { amount: ''})
+            }
             try {
                 amount = parseFloat(action.value);
             } catch {
@@ -60,7 +63,7 @@ const depositReducer = (state = initialState, action) => {
         case 'RESET_DEPOSIT':
             return update(state, { amount: 0, inputError: false, showConfirmScreen: false, current: 0 });
         case 'UPDATE_STEP':
-            console.log(action.value);
+            console.log('Modal Step: ', action.value);
             return update(state, { current: action.value });
         case 'SAVE_RECEIPT':
             return update(state, { receipt: action.value });
@@ -100,7 +103,7 @@ function* fetchUSD() {
         .then(res => {
             let usd = res.data.USD;
             if (usd) {
-                // console.log(`eth_usd: ${usd}`);
+                console.log(`eth_usd: ${usd}`);
                 // 여기서는 usd를 int로 써야하기 때문에 * 100을 한다
                 return usd * 100;
             }

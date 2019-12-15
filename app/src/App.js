@@ -24,11 +24,16 @@ class App extends Component {
   }
   componentDidMount = () => {
     this.props.getUSD();
-    this.intervalID = setInterval(() => this.props.getUSD(), 300000);
+    this.intervalID = setInterval(() => this.props.getUSD(), 20000);
   }
 
   componentWillUnmount = () => {
     clearInterval(this.intervalID);
+  }
+
+  componentDidUpdate = (prevProps) => {
+    console.log(this.props);
+    console.log(prevProps);
   }
 
   chanceContent = e => {
@@ -56,11 +61,12 @@ class App extends Component {
   };
 
   renderContent = current => {
+    const { account } = this.props;
     switch (current) {
       case '1':
         return <Home />
       case '2':
-        return <Dashboard />
+        return <Dashboard account = {account}/>
       default:
         return <Home />
     }
@@ -131,7 +137,7 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    state: state,
+    // state: state,
     networkId: state.web3.networkId,
     current: state.menu.current,
     account: state.accounts[0],

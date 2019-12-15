@@ -13,22 +13,34 @@ class JonburCard extends Component {
         this.dataKey = this.contracts.Jonbur.methods.getHodl.cacheCall(
             parseInt(this.props.index)
         );
+        this.state = {
+            processing: false
+        }
     }
 
     withdraw = () => {
-        message.loading('Withdrawing funds...', 3);
+        this.setState({ processing: true })
+        message.loading('Withdrawing funds...', 0);
         this.contracts.Jonbur.methods.withdraw(this.props.index).send()
             .on('transactionhash', hash => {
             })
             .on('confirmation', (confirmationNumber, receipt) => {
             })
             .on('receipt', receipt => {
-                message.success('Withdrawal Successful!', 3);
+                message.destroy();
+                message.success('Withdrawal Successful!');
+                this.setState({ processing: false })
                 console.log(receipt)
             })
             .on('error', error => {
-                message.warning('Error occured', 3);
-                console.error(error);
+                message.destroy();
+                this.setState({ processing: false })
+                if (error.code === 4001) {
+                    message.warning('Canceled Request');
+                } else {
+                    message.warning('Error occured');
+                    console.log(error);
+                }
             })
     }
 
@@ -36,6 +48,8 @@ class JonburCard extends Component {
         const { dueDate, withdrawDate, spent } = obj;
         if (spent) {
             return `Emptied on ${withdrawDate.toDateString().substr(4)}`;
+        } else if (this.state.processing) {
+            return 'Processing Withdrawal...';
         } else {
             if (dueDate < new Date()) {
                 return `It's time to withdraw`;
@@ -57,19 +71,25 @@ class JonburCard extends Component {
         if (spent) {
             return (
                 <Button type="dashed" disabled>
-                    <Icon type="check" />
+                    <Icon type="check"></Icon>
                     Empty
-        </Button>
+                </Button>
+            );
+        } else if (this.state.processing) {
+            return (
+                <Button type="primary" disabled>
+                    <Icon type="loading"></Icon>
+                    Processing...
+                </Button>
+            );
+        } else if (dueDate < new Date()) {
+            return (
+                <Button type="primary" onClick={this.withdraw}>
+                    <Icon type="unlock"></Icon>
+                    Withdraw
+                    </Button>
             );
         } else {
-            if (dueDate < new Date()) {
-                return (
-                    <Button type="primary" onClick={this.withdraw}>
-                        <Icon type="unlock" />
-                        Withdraw
-          </Button>
-                );
-            }
             return (
                 <Button type="disabled">
                     <Icon type="lock" />
@@ -84,7 +104,7 @@ class JonburCard extends Component {
         const { usd } = this.props;
         var color;
         var icon;
-        if (ethusd === usd) {
+        if (Math.abs(ethusd - usd) / 100 * depositAmount < 0.005) {
             color = "gray";
             icon = "minus"
         } else if (ethusd < usd) {

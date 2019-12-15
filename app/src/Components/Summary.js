@@ -90,44 +90,6 @@ class Summary extends Component {
                             : null
                     }
                 </Col>
-                {/* <Col span={12}>
-                    <Button type="primary" block style={{ marginTop: '1em' }} onClick={this.onConfirm}>
-                        Confirm
-                    </Button>
-                </Col>
-                <Col span={12}>
-                    <Button type="default" block style={{ marginTop: '1em' }}>
-                        Go Back
-                    </Button>
-                </Col> */}
-                {/* <Modal 
-                centered 
-                visible={modal} 
-                closable={false}
-                footer={null}
-                >
-                    <h3>
-                        Did you know..
-                    </h3>
-                    <p>
-                        <i>
-                            Fun facts about Jonbur
-                        </i>
-                    </p>
-                    <br/>
-                    <Progress
-                        strokeColor={{
-                            from: '#108ee9',
-                            to: '#87d068',
-                        }}
-                        percent={99.9}
-                        status="active"
-                        showInfo={false}
-                    />
-                    <p style={{textAlign: 'center'}}>
-                        Pending transaction...
-                    </p>
-                </Modal> */}
             </Row>
         );
     }

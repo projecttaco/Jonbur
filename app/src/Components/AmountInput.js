@@ -19,21 +19,22 @@ class AmountInput extends Component {
     }
 
     render() {
-        const { maxAmount } = this.state;
         const { account, inputValue } = this.props;
+        const balance = Number(web3.utils.fromWei(this.props.balance, "ether"));
         var marks = {
             0: '0 ETH',
             // 100: maxAmount,
         }
-        marks[maxAmount] = 'MAX';
+        marks[balance] = 'MAX';
+        var sliderInput = inputValue === ''? 0:inputValue
         return (
             <Row>
                 {/* 나중에는 이 부분을 Account info로 따로 빼기 */}
                 <Avatar style={{ float: 'left', margin:'0px 10px' }} size="large" icon="user"/>
                 <p style={{ float: 'right', marginBottom: '0px' }}>{`${account.substr(0, 6)}...${account.substr(account.length - 4, account.length)}`}</p><br/>
-                <h3 style={{ float: 'right' }}>Balance: {this.state.maxAmount}ETH</h3>
-                <Input format={"[0-9]*"} step={0.01} min={0} max={this.state.maxAmount} value={inputValue} onChange={e => this.props.amountChange(e.target.value)} style={{ font: '2em' }} prefix="Ξ" suffix="ETH" />
-                <Slider step={0.01} min={0} max={this.state.maxAmount} value={inputValue} onChange={e => this.props.amountChange(e)} style={{ margin: 20 }} marks={marks} />
+                <h3 style={{ float: 'right' }}>Balance: {balance.toFixed(4)}ETH</h3>
+                <Input format={"[0-9]*"} step={0.01} min={0} max={balance} value={inputValue} onChange={e => this.props.amountChange(e.target.value)} style={{ font: '2em' }} prefix="Ξ" suffix="ETH" />
+                <Slider step={0.01} min={0} max={balance} value={sliderInput} onChange={e => this.props.amountChange(e)} style={{ margin: 20 }} marks={marks} />
             </Row>
         );
     }

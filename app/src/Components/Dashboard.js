@@ -18,7 +18,7 @@ class Dashboard extends Component {
     }
 
     componentDidUpdate = (prevProps) => {
-        if (this.props.account != prevProps.account) {
+        if (this.props.account !== prevProps.account) {
             console.log('here');
             this.dataKey = this.contracts.Jonbur.methods.getHodlIndex.cacheCall();
             this.sumKey = this.contracts.Jonbur.methods.getSum.cacheCall();

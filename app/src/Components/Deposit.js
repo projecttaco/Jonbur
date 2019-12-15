@@ -48,36 +48,38 @@ class Deposit extends Component {
         )
     }
 
-    onConfirm = () => {
+    deposit = () => {
         const { inputValue, withdrawDate, usd } = this.props;
         // TODO: estimate gas fee
         // const gasFee = 0.002108;
         const gasFee = 0;
         const amount = web3.utils.toWei((inputValue - gasFee) + "", "ether");
-        console.log(amount, gasFee);
+        this.props.onChange(0);
         // message.loading('Creating a new HODL...', 0);
         this.contracts.Jonbur.methods.deposit(withdrawDate.unix(), usd, '').send({ value: amount })
             .on('transactionhash', hash => {
-                // message.loading('Creating a new HODL...', 3);
+                message.loading('Creating a new HODL...', 0);
                 console.log(hash);
                 this.props.hideModal();
             })
             .on('confirmation', (confirmationNumber, receipt) => {
-                console.log(confirmationNumber, receipt);
-                // message.loading('Confirming a new HODL...', 3);
+                // console.log(confirmationNumber, receipt);
             })
             .on('receipt', receipt => {
-                // reset modal step to 0
-                this.props.onChange(0)
-                message.success('Jonbur Successful!', 3);
+                message.destroy();
+                message.success('Jonbur Successful!');
                 console.log(receipt);
-                this.props.saveReceipt(receipt);
+                // this.props.saveReceipt(receipt);
             })
             .on('error', error => {
-                // reset modal step to 0
-                this.props.onChange(0)
-                // message.warning('Error occured', 3);
-                console.error(error);
+                message.destroy();
+                this.setState({ processing: false })
+                if (error.code === 4001) {
+                    message.warning('Canceled Request');
+                } else {
+                    message.warning('Error occured');
+                    console.log(error);
+                }
             })
 
         this.props.hideModal();
@@ -100,12 +102,12 @@ class Deposit extends Component {
                         </Button>
                     )}
                     {current === steps.length - 1 && (
-                        <Button type="primary" style={{ float: 'right', margin: '10px' }} onClick={this.onConfirm}>
+                        <Button type="primary" style={{ float: 'right', margin: '10px' }} onClick={this.deposit}>
                             Confirm
                         </Button>
                     )}
                     {current > 0 && (
-                        <Button style={{ marginLeft: 8 }} style={{ float: 'right', margin: '10px' }} onClick={() => this.props.onChange(current - 1)}>
+                        <Button style={{ float: 'right', margin: '10px' }} onClick={() => this.props.onChange(current - 1)}>
                             Previous
                         </Button>
                     )}
