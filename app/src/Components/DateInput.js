@@ -22,13 +22,15 @@ class DateInput extends Component {
         // const { year, month, day, hour, minute, second } = this.props;
         // console.log(withdrawDate);
         return (
-            <Row justify={'space-between'}>
-                <Col span={14}>
-                    <DatePicker defaultValue={inputDate} onChange={e => this.props.dateChange(e)}/>
-                </Col>
-                <Col span={8}>
-                    <TimePicker defaultValue={inputTime} onChange={e => this.props.timeChange(e)}/>
-                </Col>
+            <Row style={{textAlign:'left'}}>
+                <div style={{margin:'20px auto'}}>
+                    <h3 style={{display:'inline'}}>Pick a date: </h3>
+                    <DatePicker style={{float:'right'}} defaultValue={inputDate} onChange={e => this.props.dateChange(e)}/>
+                </div>
+                <div style={{margin:'20px auto'}}>
+                    <h3 style={{display:'inline'}}>Set the time: </h3>
+                    <TimePicker style={{float:'right'}} defaultValue={inputTime} onChange={e => this.props.timeChange(e)}/>
+                </div>
             </Row>
         );
     }

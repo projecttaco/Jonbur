@@ -16,11 +16,8 @@ const { Header, Content, Footer } = Layout;
 // console.log(caver);
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      current: '2'
-    }
+  state = {
+    
   }
   chanceContent = e => {
     this.setState({

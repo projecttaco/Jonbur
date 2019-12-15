@@ -49,9 +49,9 @@ class Summary extends Component {
         const balance = inputValue * 1 - gasFee;
 
         return (
-            <Row gutter={8} style={{ width: '60%', minWidth: '320px', margin: 'auto', left: '-24px' }}>
+            <Row gutter={8} style={{ margin:'auto' }}>
                 <Col>
-                    <Paragraph strong style={{ textAlign: 'right', fontSize: '0.8em' }}>{inputValue} ETH</Paragraph>
+                    <Paragraph strong style={{ textAlign: 'right', fontSize: '0.8em' }}>{inputValue.toFixed(4)} ETH</Paragraph>
                 </Col>
                 <Col span={6}>
                     <Paragraph strong style={{ textAlign: 'right', fontSize: '0.8em' }}>- Gas Fee</Paragraph>
@@ -59,17 +59,17 @@ class Summary extends Component {
                 <Col span={18}>
                     <Paragraph strong style={{ textAlign: 'right', fontSize: '0.8em' }}>{gasFee} ETH</Paragraph>
                 </Col>
-                <Col span={24} style={{ width: '110%' }}>
+                <Col span={24}>
                     <hr />
                 </Col>
                 <Col span={6}>
                     <Paragraph strong style={{ textAlign: 'right', fontSize: '0.8em' }}>Deposit</Paragraph>
                 </Col>
                 <Col span={18}>
-                    <Paragraph strong style={{ textAlign: 'right', fontSize: '0.8em' }}>{balance} ETH</Paragraph>
+                    <Paragraph strong style={{ textAlign: 'right', fontSize: '0.8em' }}>{balance.toFixed(4)} ETH</Paragraph>
                 </Col>
                 <Col>
-                    <Title strong level={1} style={{ textAlign: 'center', marginBottom: '0.1em' }}>{balance} ETH</Title>
+                    <Title strong level={1} style={{ textAlign: 'center', marginBottom: '0.1em' }}>{balance.toFixed(4)} ETH</Title>
                     <Paragraph strong style={{ textAlign: 'center' }}>will be tied up until</Paragraph>
                     <Title strong level={3} style={{ textAlign: 'center', marginTop: '0' }}>{withdrawDate.format('YYYY-MM-DD, HH:mm:ss')}</Title>
                 </Col>
@@ -89,7 +89,7 @@ class Summary extends Component {
                             : null
                     }
                 </Col>
-                <Col span={12}>
+                {/* <Col span={12}>
                     <Button type="primary" block style={{ marginTop: '1em' }} onClick={this.onConfirm}>
                         Confirm
                     </Button>
@@ -98,7 +98,7 @@ class Summary extends Component {
                     <Button type="default" block style={{ marginTop: '1em' }}>
                         Go Back
                     </Button>
-                </Col>
+                </Col> */}
                 <Modal 
                 centered 
                 visible={modal} 

@@ -7,22 +7,6 @@ import Summary from "./Summary";
 import { Steps, Result, Button, message } from 'antd';
 const { Step } = Steps;
 
-// const renderTitle = (current, visibleResult) => {
-//     if (visibleResult) {
-//         return `You're all set.`
-//     }
-//     switch (current) {
-//         case 0:
-//             return 'Keep your ethereum.'
-//         case 1:
-//             return 'Select the date.'
-//         case 2:
-//             return 'Review your transaction.'
-//         default:
-//             return 'Keep your ethereum'
-//     }
-// }
-
 class Deposit extends Component {
     onChange = current => {
         console.log('onChange:', current);
@@ -69,21 +53,21 @@ class Deposit extends Component {
                     <Step title="Summary" />
                 </Steps>
                 <div className="steps-content">{steps[current]}</div>
-                <div className="steps-action">
+                <div className="steps-action" style={{minHeight:'50px'}}>
                     {current < steps.length - 1 && (
-                        <Button type="primary" onClick={() => this.onChange(current+1)}>
+                        <Button type="primary" style={{ float: 'right', margin: '10px'}} onClick={() => this.props.onChange(current + 1)}>
                             Next
-            </Button>
+                        </Button>
                     )}
                     {current === steps.length - 1 && (
-                        <Button type="primary" onClick={() => message.success('Processing complete!')}>
-                            Done
-            </Button>
+                        <Button type="primary" style={{ float: 'right', margin: '10px'}} onClick={() => message.success('Processing complete!')}>
+                            Confirm
+                        </Button>
                     )}
                     {current > 0 && (
-                        <Button style={{ marginLeft: 8 }} onClick={() => this.onChange(current-1)}>
+                        <Button style={{ marginLeft: 8 }} style={{ float: 'right', margin: '10px'}} onClick={() => this.props.onChange(current - 1)}>
                             Previous
-            </Button>
+                        </Button>
                     )}
                 </div>
             </div>

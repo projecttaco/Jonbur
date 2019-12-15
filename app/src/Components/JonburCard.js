@@ -15,14 +15,14 @@ class JonburCard extends Component {
     }
 
     withdraw  = () => {
-        message.loading('Withdrawing funds...', 0);
+        message.loading('Withdrawing funds...', 3);
         this.contracts.Jonbur.methods.withdraw(this.props.index).send()
         .on('transactionhash', hash => {
         })
         .on('confirmation', (confirmationNumber, receipt) => {
         })
         .on('receipt', receipt => {
-            message.destroy();
+            // message.destroy();
             message.success('Withdrawal Successful!', 3);
             console.log(receipt)
         })
@@ -89,7 +89,7 @@ class JonburCard extends Component {
             spent: data[5]
         }
         return (
-            <Card key={index} style={{ boxShadow: '0px 3px 6px #00000029', borderRadius: '10px', maxWidth: '600px', margin: 'auto', marginBottom: '10px' }}>
+            <Card key={index} hoverable={true} style={{ boxShadow: '0px 3px 6px #00000029', borderRadius: '10px', maxWidth: '600px', margin: 'auto', marginBottom: '10px' }}>
                 <div style={{ float: 'right', textAlign: 'right' }}>
                     <div style={{ color: 'ececec', fontSize: '10px', margin: '-6px 0 6px 0' }}>{this.renderDescription(obj)}</div>
                     {this.renderButton(obj)}

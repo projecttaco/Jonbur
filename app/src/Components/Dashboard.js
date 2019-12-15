@@ -26,7 +26,7 @@ class Dashboard extends Component {
 
     renderInfo = (sum) => {
         sum = Number(web3.utils.fromWei(sum, 'ether'));
-        sum = sum > 1000 ? sum.toFixed(2): sum.toFixed(4);
+        sum = sum > 1000 ? sum.toFixed(2) : sum.toFixed(4);
         return (
             <div className={'center summary'}>
                 <Title level={2} style={{ font: 'Bold 2.4em Avenir', color: 'white', marginBottom: '0px' }}>{sum} ETH</Title>
@@ -47,9 +47,10 @@ class Dashboard extends Component {
         const amount = web3.utils.toWei((inputValue - gasFee) + "", "ether");
         console.log(amount, gasFee);
         const usdeth = 14700
-        message.loading('Creating a new HODL...', 0);
+        // message.loading('Creating a new HODL...', 0);
         this.contracts.Jonbur.methods.deposit(withdrawDate.unix(), usdeth, '').send({ value: amount })
             .on('transactionhash', hash => {
+                message.loading('Creating a new HODL...', 3);
             })
             .on('confirmation', (confirmationNumber, receipt) => {
             })
@@ -75,6 +76,23 @@ class Dashboard extends Component {
             visible: false,
         });
     };
+
+    renderModalTitle = () => {
+        const { current } = this.props;
+        // if (visibleResult) {
+        //     return `You're all set.`
+        // }
+        switch (current) {
+            case 0:
+                return 'Set the amount.'
+            case 1:
+                return 'Select the date.'
+            case 2:
+                return 'Review your transaction.'
+            default:
+                return 'Keep your ethereum'
+        }
+    }
 
     render() {
         if (!(this.dataKey in this.props.Jonbur.getHodlIndex || this.sumKey in this.props.Jonbur.getSum)) {
@@ -108,10 +126,11 @@ class Dashboard extends Component {
                     </button>
                 </div>
                 <Modal
-                    title="Request Withdraw"
+                    title={this.renderModalTitle()}
                     visible={this.state.visible}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
+                    footer={null}
                 >
                     <Deposit />
                 </Modal>
@@ -127,6 +146,7 @@ const mapStateToProps = state => {
         account: state.accounts[0],
         inputValue: state.deposit.amount,
         withdrawDate: state.deposit.withdrawDate,
+        current: state.deposit.current,
     };
 };
 
