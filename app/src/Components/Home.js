@@ -10,7 +10,7 @@ class Home extends Component {
                 <div style={{ backgroundColor: '#003368', height: '70vh', minHeight: '520px', textAlign:'center' }}>
                     <h1 className={'homeTitle'}>The First Decentralized Bank.</h1>
                     {/* <img src={require('../images/GRAPHIC.png')}/> */}
-                    <Logo className={'homeImage'}/>
+                    {/* <Logo className={'homeImage'}/> */}
                 </div>
                 <div>
                     <div className={'menuButton'} style={{ pointer: 'click', width: '80%', marginTop: '-20px', backgroundColor: 'white' }} onClick={() => { this.props.goto('2'); }}>Get Started</div>

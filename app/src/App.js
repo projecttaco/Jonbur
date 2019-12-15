@@ -16,9 +16,21 @@ const { Header, Content, Footer } = Layout;
 // console.log(caver);
 
 class App extends Component {
-  state = {
-    
+  constructor(props){
+    super(props);
+    this.state = {
+
+    }
   }
+  componentDidMount = () => {
+    this.props.getUSD();
+    this.intervalID = setInterval(() => this.props.getUSD(), 300000);
+  }
+
+  componentWillUnmount = () => {
+    clearInterval(this.intervalID);
+  }
+
   chanceContent = e => {
     this.setState({
       current: e.key
@@ -130,6 +142,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     goto: value => dispatch({ type: 'GOTO', value: value }),
+    getUSD: () => dispatch({ type: 'GET_USD' }),
   };
 }
 

@@ -2,6 +2,7 @@ import { put, takeEvery } from 'redux-saga/effects'
 import { generateStore } from 'drizzle'
 import drizzleOptions from './drizzleOptions'
 import moment from 'moment'
+import axios from "axios";
 
 // actions
 const TODOS_FETCH = 'MY_APP/TODOS_FETCH'
@@ -72,6 +73,19 @@ const depositReducer = (state = initialState, action) => {
     }
 }
 
+const initialMainState = {
+    usd: 0,
+}
+
+const mainReducer = (state = initialMainState, action) => {
+    switch (action.type) {
+        case 'SET_USD':
+            return update(state, { usd: action.value })
+        default:
+            return state;
+    }
+}
+
 const menuReducer = (state = { current: "1" }, action) => {
     switch (action.type) {
         case 'GOTO':
@@ -79,6 +93,21 @@ const menuReducer = (state = { current: "1" }, action) => {
         default:
             return state;
     }
+}
+
+function* fetchUSD() {
+    const usd = yield axios.get("https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD")
+        .then(res => {
+            let usd = res.data.USD;
+            if (usd) {
+                // console.log(`eth_usd: ${usd}`);
+                return usd * 100;
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    yield put({ type: 'SET_USD', value: usd });
 }
 
 // fetch data from service using sagas
@@ -93,11 +122,12 @@ function* fetchTodos() {
 
 // app root saga
 function* appRootSaga() {
-    yield takeEvery(TODOS_FETCH, fetchTodos)
+    yield takeEvery(TODOS_FETCH, fetchTodos);
+    yield takeEvery('GET_USD', fetchUSD);
 }
 
 // app Reducers and Sagas
-const appReducers = { deposit: depositReducer, menu: menuReducer }
+const appReducers = { deposit: depositReducer, menu: menuReducer, main: mainReducer, }
 const appSagas = [appRootSaga]
 
 const store = generateStore({

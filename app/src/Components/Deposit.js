@@ -50,14 +50,13 @@ class Deposit extends Component {
 
     onConfirm = () => {
         // message.success('Processing complete!')
-        const { inputValue, withdrawDate } = this.props;
+        const { inputValue, withdrawDate, usd } = this.props;
         // TODO: estimate gas fee
         const gasFee = 0.002108;
         const amount = web3.utils.toWei((inputValue - gasFee) + "", "ether");
         console.log(amount, gasFee);
-        const usdeth = 14700
         // message.loading('Creating a new HODL...', 0);
-        this.contracts.Jonbur.methods.deposit(withdrawDate.unix(), usdeth, '').send({ value: amount })
+        this.contracts.Jonbur.methods.deposit(withdrawDate.unix(), usd, '').send({ value: amount })
             .on('transactionhash', hash => {
                 // message.loading('Creating a new HODL...', 3);
             })
@@ -122,6 +121,7 @@ const mapStateToProps = state => {
         receipt: state.deposit.receipt,
         inputValue: state.deposit.amount,
         withdrawDate: state.deposit.withdrawDate,
+        usd: state.main.usd,
     };
 };
 

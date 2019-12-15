@@ -8,8 +8,6 @@ import JonburCard from './JonburCard';
 import { formatter } from '../utils';
 const { Title } = Typography;
 
-// TODO: ETH-USD 가져오기
-const usd = 5708;
 
 class Dashboard extends Component {
     constructor(props, context) {
@@ -20,6 +18,7 @@ class Dashboard extends Component {
     }
 
     renderInfo = (sum) => {
+        const { usd } = this.props;
         sum = Number(web3.utils.fromWei(sum, 'ether'));
         sum = sum > 1000 ? sum.toFixed(2) : sum.toFixed(4);
         return (
@@ -98,6 +97,7 @@ const mapStateToProps = state => {
         withdrawDate: state.deposit.withdrawDate,
         current: state.deposit.current,
         modal: state.deposit.modal, 
+        usd: state.main.usd,
     };
 };
 
