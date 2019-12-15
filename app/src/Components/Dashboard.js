@@ -17,6 +17,16 @@ class Dashboard extends Component {
         this.sumKey = this.contracts.Jonbur.methods.getSum.cacheCall();
     }
 
+    componentDidUpdate = (prevProps) => {
+        if (this.props.account != prevProps.account) {
+            console.log('here');
+            this.dataKey = this.contracts.Jonbur.methods.getHodlIndex.cacheCall();
+            this.sumKey = this.contracts.Jonbur.methods.getSum.cacheCall();
+
+            this.setState({ state: this.state });
+        }
+    }
+
     renderInfo = (sum) => {
         const { usd } = this.props;
         sum = Number(web3.utils.fromWei(sum, 'ether'));
@@ -44,8 +54,8 @@ class Dashboard extends Component {
     }
 
     render() {
-        const { showModal, hideModal } = this.props;
-        if (!(this.dataKey in this.props.Jonbur.getHodlIndex || this.sumKey in this.props.Jonbur.getSum)) {
+        const { showModal, hideModal, Jonbur } = this.props;
+        if (!(this.dataKey in Jonbur.getHodlIndex || this.sumKey in Jonbur.getSum)) {
             return (
                 <div>
                     <div className="topBackground" />
@@ -58,8 +68,8 @@ class Dashboard extends Component {
             )
         }
 
-        var indexes = this.props.Jonbur.getHodlIndex[this.dataKey];
-        var sum = this.props.Jonbur.getSum[this.sumKey];
+        var indexes = Jonbur.getHodlIndex[this.dataKey];
+        var sum = Jonbur.getSum[this.sumKey];
         // console.log(indexes);
         return (
             <div>
@@ -80,6 +90,7 @@ class Dashboard extends Component {
                     visible={this.props.modal}
                     onCancel={hideModal}
                     footer={null}
+                    centered
                 >
                     <Deposit />
                 </Modal>
@@ -90,13 +101,12 @@ class Dashboard extends Component {
 
 const mapStateToProps = state => {
     return {
-        state: state,
         Jonbur: state.contracts.Jonbur,
         account: state.accounts[0],
         inputValue: state.deposit.amount,
         withdrawDate: state.deposit.withdrawDate,
         current: state.deposit.current,
-        modal: state.deposit.modal, 
+        modal: state.deposit.modal,
         usd: state.main.usd,
     };
 };
