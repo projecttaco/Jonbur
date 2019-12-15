@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Input, Slider } from 'antd';
+import { Row, Input, Slider, Avatar } from 'antd';
 import { drizzleConnect } from "drizzle-react";
 import web3 from 'web3';
 
@@ -28,7 +28,9 @@ class AmountInput extends Component {
         marks[maxAmount] = 'MAX';
         return (
             <Row>
-                <p style={{ float: 'right' }}>{`${account.substr(0, 6)}...${account.substr(account.length - 4, account.length)}`}</p><br/>
+                {/* 나중에는 이 부분을 Account info로 따로 빼기 */}
+                <Avatar style={{ float: 'left', margin:'0px 10px' }} size="large" icon="user"/>
+                <p style={{ float: 'right', marginBottom: '0px' }}>{`${account.substr(0, 6)}...${account.substr(account.length - 4, account.length)}`}</p><br/>
                 <h3 style={{ float: 'right' }}>Balance: {this.state.maxAmount}ETH</h3>
                 <Input htmlType={'text'} format={"[0-9]*"} step={0.01} min={0} max={this.state.maxAmount} value={inputValue} onChange={e => this.props.amountChange(e.target.value)} style={{ font: '2em' }} prefix="Ξ" suffix="ETH" />
                 <Slider step={0.01} min={0} max={this.state.maxAmount} value={inputValue} onChange={e => this.props.amountChange(e)} style={{ margin: 20 }} marks={marks} />
