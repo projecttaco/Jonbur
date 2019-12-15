@@ -19,9 +19,10 @@ class JonburCard extends Component {
     }
 
     withdraw = () => {
+        const { usd } = this.props;
         this.setState({ processing: true })
         message.loading('Withdrawing funds...', 0);
-        this.contracts.Jonbur.methods.withdraw(this.props.index).send()
+        this.contracts.Jonbur.methods.withdraw(this.props.index, usd).send()
             .on('transactionhash', hash => {
             })
             .on('confirmation', (confirmationNumber, receipt) => {
@@ -100,21 +101,21 @@ class JonburCard extends Component {
     };
 
     renderProfit = obj => {
-        const { ethusd, depositAmount } = obj;
-        const { usd } = this.props;
+        const { depositPrice, withdrawPrice, depositAmount } = obj;
+        const usd = withdrawPrice > 0 ? withdrawPrice : this.props.usd;
         var color;
         var icon;
-        if (Math.abs(ethusd - usd) / 100 * depositAmount < 0.005) {
+        if (Math.abs(depositPrice - usd) / 100 * depositAmount < 0.005) {
             color = "gray";
             icon = "minus"
-        } else if (ethusd < usd) {
+        } else if (depositPrice < usd) {
             color = "green";
             icon = "caret-up";
         } else {
             color = "red";
             icon = "caret-down";
         }
-        var profit = Math.abs(ethusd - usd) / 100 * depositAmount;
+        var profit = Math.abs(depositPrice - usd) / 100 * depositAmount;
         return (
             <span style={{ color: color }}>
                 {" "}
@@ -145,12 +146,13 @@ class JonburCard extends Component {
         var data = this.props.Jonbur.getHodl[this.dataKey].value;
         const obj = {
             index: index,
-            depositDate: new Date(Number(data[0]) * 1000),
-            dueDate: new Date(Number(data[1]) * 1000),
-            withdrawDate: new Date(Number(data[2]) * 1000),
-            depositAmount: Number(web3.utils.fromWei(data[3], "ether")), // in wei
-            ethusd: data[4],
-            spent: data[5]
+            dueDate: new Date(Number(data[0]) * 1000),
+            depositAmount: Number(web3.utils.fromWei(data[1], "ether")), // in wei
+            depositDate: new Date(Number(data[2]) * 1000),
+            withdrawDate: new Date(Number(data[3]) * 1000),
+            depositPrice: data[4],
+            withdrawPrice: data[5],
+            spent: data[6],
         };
         return (
             <Card
