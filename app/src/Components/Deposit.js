@@ -49,18 +49,21 @@ class Deposit extends Component {
     }
 
     onConfirm = () => {
-        // message.success('Processing complete!')
         const { inputValue, withdrawDate, usd } = this.props;
         // TODO: estimate gas fee
-        const gasFee = 0.002108;
+        // const gasFee = 0.002108;
+        const gasFee = 0;
         const amount = web3.utils.toWei((inputValue - gasFee) + "", "ether");
         console.log(amount, gasFee);
         // message.loading('Creating a new HODL...', 0);
         this.contracts.Jonbur.methods.deposit(withdrawDate.unix(), usd, '').send({ value: amount })
             .on('transactionhash', hash => {
                 // message.loading('Creating a new HODL...', 3);
+                console.log(hash);
+                this.props.hideModal();
             })
             .on('confirmation', (confirmationNumber, receipt) => {
+                console.log(confirmationNumber, receipt);
                 // message.loading('Confirming a new HODL...', 3);
             })
             .on('receipt', receipt => {
@@ -76,6 +79,7 @@ class Deposit extends Component {
                 // message.warning('Error occured', 3);
                 console.error(error);
             })
+
         this.props.hideModal();
     }
 
@@ -89,19 +93,19 @@ class Deposit extends Component {
                     <Step title="Summary" />
                 </Steps>
                 <div className="steps-content">{steps[current]}</div>
-                <div className="steps-action" style={{minHeight:'50px'}}>
+                <div className="steps-action" style={{ minHeight: '50px' }}>
                     {current < steps.length - 1 && (
-                        <Button type="primary" style={{ float: 'right', margin: '10px'}} onClick={() => this.props.onChange(current + 1)}>
+                        <Button type="primary" style={{ float: 'right', margin: '10px' }} onClick={() => this.props.onChange(current + 1)}>
                             Next
                         </Button>
                     )}
                     {current === steps.length - 1 && (
-                        <Button type="primary" style={{ float: 'right', margin: '10px'}} onClick={this.onConfirm}>
+                        <Button type="primary" style={{ float: 'right', margin: '10px' }} onClick={this.onConfirm}>
                             Confirm
                         </Button>
                     )}
                     {current > 0 && (
-                        <Button style={{ marginLeft: 8 }} style={{ float: 'right', margin: '10px'}} onClick={() => this.props.onChange(current - 1)}>
+                        <Button style={{ marginLeft: 8 }} style={{ float: 'right', margin: '10px' }} onClick={() => this.props.onChange(current - 1)}>
                             Previous
                         </Button>
                     )}
