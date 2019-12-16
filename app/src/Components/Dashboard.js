@@ -98,7 +98,7 @@ class Dashboard extends Component {
                         {indexes && [...indexes.value].reverse().map((index => { return (<JonburCard key={index} index={index} />) }))}
                         {!processing && indexes && indexes.value.length < 1 && <Empty><Button type="primary" onClick={showModal}>Create Jonbur Now</Button></Empty>}
                     </div>
-                    <button onClick={showModal} className="float">
+                    <button onClick={showModal} className="deposit-modal-button">
                         <Icon type="plus" />
                     </button>
                 </div>

@@ -51,19 +51,20 @@ body {
   /* min-width: 600px; */
 }
 
-.float {
+.deposit-modal-button {
+  width: 64px;
+  height: 64px;
   position: fixed;
-  width: 60px;
-  height: 60px;
-  bottom: 40px;
   right: 40px;
+  bottom: 40px;
   background-color: #003368;
   color: #FFF !important;
-  border-radius: 50px;
+  border-radius: 50%;
   text-align: center;
-  box-shadow: 2px 2px 3px #999;
-  z-index: 500;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+  z-index: 5;
   font-size: 40px;
+  cursor: pointer;
 }
 
 .ant-steps-navigation {
