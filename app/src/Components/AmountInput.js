@@ -35,7 +35,14 @@ class AmountInput extends Component {
                 <Avatar style={{ float: 'left', margin:'0px 10px' }} size="large" icon="user"/>
                 <p style={{ float: 'right', marginBottom: '0px' }}>{`${account.substr(0, 6)}...${account.substr(account.length - 4, account.length)}`}</p><br/>
                 <h3 style={{ float: 'right' }}>Balance: {balance.toFixed(4)}ETH</h3>
-                <Input format={"[0-9]*"} step={0.01} min={0} max={max} value={inputValue} onChange={e => this.props.amountChange(e.target.value)} style={{ font: '2em' }} prefix="Ξ" suffix="ETH" />
+                <Input 
+                    step={0.01} 
+                    min={0} 
+                    max={max} 
+                    value={inputValue} 
+                    onChange={e => this.props.amountChange(e.target.value)} 
+                    style={{ font: '2em' }} 
+                    prefix="Ξ" suffix="ETH" />
                 <Slider step={0.01} min={0} max={max} value={sliderInput} onChange={e => this.props.amountChange(e)} style={{ margin: 20 }} marks={marks} />
             </Row>
         );

@@ -54,29 +54,32 @@ class Deposit extends Component {
         // const gasFee = 0.002108;
         const gasFee = 0;
         const amount = web3.utils.toWei((inputValue - gasFee) + "", "ether");
+        // initialize Deposit modal step to 0
         this.props.onChange(0);
+        // message for creating a hodl
+        message.destroy();
         message.loading('Creating a new HODL...', 0);
+        // shows dummy skeleton 
         this.props.showDummy();
         this.contracts.Jonbur.methods.deposit(withdrawDate.unix(), usd, '').send({ value: amount })
-            .on('transactionhash', hash => {
-                message.loading('Creating a new HODL...', 0);
+            .once('transactionhash', hash => {
                 console.log(hash);
-                this.props.hideModal();
+                message.loading('Creating a new HODL...', 0);
             })
-            .on('confirmation', (confirmationNumber, receipt) => {
+            .once('confirmation', (confirmationNumber, receipt) => {
                 console.log(confirmationNumber, receipt);
             })
-            .on('receipt', receipt => {
+            .once('receipt', receipt => {
+                console.log(receipt);
                 message.destroy();
                 message.success('Jonbur Successful!');
-                console.log(receipt);
                 // this.props.saveReceipt(receipt);
                 this.props.hideDummy();
             })
-            .on('error', error => {
+            .once('error', error => {
                 message.destroy();
                 this.setState({ processing: false })
-                if (error.code === 4001) {
+                if (error.code === 4001) { //metamask web reject transaction code
                     message.warning('Canceled Request');
                 } else {
                     message.warning('Error occured');

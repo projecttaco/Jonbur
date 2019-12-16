@@ -23,17 +23,17 @@ class JonburCard extends Component {
         this.setState({ processing: true })
         message.loading('Withdrawing funds...', 0);
         this.contracts.Jonbur.methods.withdraw(this.props.index, usd).send()
-            .on('transactionhash', hash => {
+            .once('transactionhash', hash => {
             })
-            .on('confirmation', (confirmationNumber, receipt) => {
+            .once('confirmation', (confirmationNumber, receipt) => {
             })
-            .on('receipt', receipt => {
+            .once('receipt', receipt => {
                 message.destroy();
                 message.success('Withdrawal Successful!');
                 this.setState({ processing: false })
                 console.log(receipt)
             })
-            .on('error', error => {
+            .once('error', error => {
                 message.destroy();
                 this.setState({ processing: false })
                 if (error.code === 4001) {
