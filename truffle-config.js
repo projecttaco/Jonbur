@@ -8,18 +8,36 @@ const path = require("path");
  * @param {string} provider - Provide your SKALE endpoint address.
  */
 
-let HDWalletProvider = require("truffle-hdwallet-provider");
+const HDWalletProvider = require("truffle-hdwallet-provider");
 
 // https://developers.skalelabs.com for SKALE documentation
 // Provide your wallet private key
-let privateKey = process.env.YOUR_PRIVATE_KEY;
+const privateKey = process.env.YOUR_PRIVATE_KEY;
 
 // Provide your SKALE endpoint address
-let skale = process.env.YOUR_SKALE_CHAIN_ENDPOINT_1;
+const skale = process.env.YOUR_SKALE_CHAIN_ENDPOINT_1;
 
 // Provider your wallet mnemonic to use infura service
-let testMnemonic = "explain soul power employ mixture essay hurdle swarm guitar ladder bicycle napkin"
+const testMnemonic =
+  "explain soul power employ mixture essay hurdle swarm guitar ladder bicycle napkin";
 
+const HDWalletProviderKlaytn = require("truffle-hdwallet-provider-klaytn");
+
+/**
+ * truffle network variables
+ * for deploying contract to klaytn network.
+ */
+const BAOBAB_NETWORK_ID = "1001";
+
+/**
+ * URL: URL for the remote node you will be using
+ * PRIVATE_KEY: Private key of the account that pays for the transaction (Change it to your own private key)
+ */
+const BAOBAB_URL = "https://api.baobab.klaytn.net:8651";
+
+// Paste your `Private key` that has enough KLAY to truffle.js
+const KLAYTN_PRIVATE_KEY =
+  "0x3de0c90ce7e440f19eff6439390c29389f611725422b79c95f9f48c856b58277";
 
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
@@ -60,6 +78,13 @@ module.exports = {
       network_id: 4,
       gas: 4500000,
       gasPrice: 10000000000
+    },
+    baobab: {
+      provider: () =>
+        new HDWalletProviderKlaytn(KLAYTN_PRIVATE_KEY, BAOBAB_URL),
+      network_id: BAOBAB_NETWORK_ID,
+      gas: "8500000",
+      gasPrice: null
     }
   }
 };
