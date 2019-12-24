@@ -12,7 +12,8 @@
 > 지면 관계상 꼭 필요한 코드만 넣었습니다.
 > 관련된 전체 코드는 https://github.com/projecttaco/klaystagram 에서 보실 수 있습니다.
 
-> Jonbur는 이더리움 Ropsten상에서 동작합니다. (Fully Functional) https://projecttaco.github.io/jonbur 에서 확인하실 수 있습니다.
+> BApp으로 만들지 못한 Jonbur는 이더리움 Ropsten상에서는 완전 동작합니다. (메타마스크, 모바일의 경우 모바일 메타마스크/오페라 필수)
+> 관심있는 분들은 실시간 데모를 https://projecttaco.github.io/jonbur 에서 확인하실 수 있습니다.
 
 ### Auth Page
 - 맨 처음에 나오는 Auth page에는 버튼을 재활용해 Log in with Jetstream을 만들었습니다. 
