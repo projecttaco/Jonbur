@@ -90,7 +90,7 @@ const uploadMethodJetstream = (dispatch, hexString, fileName, location, caption)
 ``` 
 이런식으로 원하는 컨트랙트를 가져와서 encodeABI한 후, sendTransaction을 통해 보낼 수 있습니다.
 다만, on('receipt')에서 이벤트를 불러오지 못해서 새로운 tokenId를 받아올 수가 없었습니다.
-이벤트를 받아오려면 다음과 같은 함수를 (Jetstream 개발자님의 도움을 받았습니다.) 사용하여 받아오면 됩니다.
+이벤트를 받아오려면 다음과 같은 함수를 사용하여 받아오면 됩니다. (Jetstream 개발자님의 도움을 받았습니다. 다음 버전에 추가된다고 합니다.)
 
 ```javascript
 const getContractEventsFromReceipt = (contractInstance, receipt) => {
