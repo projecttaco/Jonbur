@@ -1,7 +1,7 @@
-# Klaytn 스터디 5주차 (12/10)
+# Klaytn 스터디 6주차 (12/17)
 ### 이번주 목표
-	- Klaystagram + Jetstream 구현
-    - 회고 (Retrospective)
+- Klaystagram + Jetstream 구현
+- 회고 (Retrospective)
 
 ## Klaystagram + Jetstream 구현
 **실시간 데모는 https://projecttaco.github.io 에서 확인하실 수 있습니다.**
