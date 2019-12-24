@@ -21,8 +21,8 @@ Drizzle은 Ethereum에서 DApp을 만들때 유용하게 쓸 수 있는 React Fr
 ![스토리보드](https://github.com/projecttaco/Jonbur/raw/master/docs/klaytn_study/images/Jonbur%20v2.png)
 
 ## 디자인 시안 공유
-![sample1](https://github.com/projecttaco/Jonbur/raw/master/docs/klaytn_study/images/sample1.png)
-![sample2](https://github.com/projecttaco/Jonbur/raw/master/docs/klaytn_study/images/sample2.png)
-![sample3](https://github.com/projecttaco/Jonbur/raw/master/docs/klaytn_study/images/sample3.png)
-![sample4](https://github.com/projecttaco/Jonbur/raw/master/docs/klaytn_study/images/sample4.png)
+![sample1](https://github.com/projecttaco/Jonbur/raw/master/docs/klaytn_study/images/sample1.png =250x)
+![sample2](https://github.com/projecttaco/Jonbur/raw/master/docs/klaytn_study/images/sample2.png =250x)
+![sample3](https://github.com/projecttaco/Jonbur/raw/master/docs/klaytn_study/images/sample3.png =250x)
+![sample4](https://github.com/projecttaco/Jonbur/raw/master/docs/klaytn_study/images/sample4.png =250x)
 
