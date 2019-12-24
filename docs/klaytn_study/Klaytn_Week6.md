@@ -12,6 +12,8 @@
 > 지면 관계상 꼭 필요한 코드만 넣었습니다.
 > 관련된 전체 코드는 https://github.com/projecttaco/klaystagram 에서 보실 수 있습니다.
 
+> Jonbur는 이더리움 Ropsten상에서 동작합니다. (Fully Functional) https://projecttaco.github.io/jonbur 에서 확인하실 수 있습니다.
+
 ### Auth Page
 - 맨 처음에 나오는 Auth page에는 버튼을 재활용해 Log in with Jetstream을 만들었습니다. 
 - Jetstream의 예쁜 분홍색을 놓치지 않기위해 hover시 나오도록 하여 일반 Login버튼과의 차별화를 두었습니다.
