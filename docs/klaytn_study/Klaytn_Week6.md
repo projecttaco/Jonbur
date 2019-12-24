@@ -8,7 +8,9 @@
 - 남이 만들어놓은 코드를 바꾼다는건 쉽지 않은 일입니다. 충분한 이해가 없으면 하나 건드렸을때 수많은 빨간색 오류들을 보게됩니다.
 - 저희도 Jetstream을 추가하는 기능을 개발하면서 수많은 오류들을 거쳐왔고, 그것들을 해결해나가면서 많은걸 배웠다고 생각합니다.
 - 또한, 좋은 예시 코드를 보면서 코드 패턴이나 배치등을 볼 수 있어서 다양한 경험을 할 수 있었습니다.
-- 코드는 https://github.com/projecttaco/klaystagram 에서 보실 수 있습니다.
+
+> 지면 관계상 꼭 필요한 코드만 넣었습니다.
+> 관련된 전체 코드는 https://github.com/projecttaco/klaystagram 에서 보실 수 있습니다.
 
 ### Auth Page
 - 맨 처음에 나오는 Auth page에는 버튼을 재활용해 Log in with Jetstream을 만들었습니다. 
@@ -124,7 +126,7 @@ const getContractEventsFromReceipt = (contractInstance, receipt) => {
 이 부분도 위 코드와 비슷하게 getState()으로 Jetstream이 사용됐는지 판별하고, 리턴값에 따라 적절한 함수를 호출하게 됩니다.
 
 ### Feed.js
-- TransferOnwer버튼을 활성화 시키는 로직에서 단순히 userAddress === currentOwner라고 되어있는 부분을 userAddress.toUpperCase() === currentOwner.toUpperCase()로 고쳤습니다. Jetstream에서 주는 address방식과 caver에서 가져오는 address방식이 다르기 때문에 이런식으로 해야 다양한 모습의 주소들을 매칭시킬 수 있습니다.
+- TransferOnwer버튼을 활성화 시키는 로직에서 단순히 `userAddress === currentOwner`라고 되어있는 부분을 `userAddress.toUpperCase() === currentOwner.toUpperCase()`로 고쳤습니다. Jetstream에서 주는 address방식과 caver에서 가져오는 address방식이 다르기 때문에 이런식으로 해야 다양한 모습의 주소들을 매칭시킬 수 있습니다.
 
 ### Bug Fix & Miscellaneous
 - Account를 누르면 Klaytn Scope으로 이동하는 경로 설정이 깨져있었습니다. 이 부분을 바꿔서 이제는 잘 작동하게 되었습니다.
@@ -148,6 +150,8 @@ const updateOwnerAddress = (tokenId, to) => (dispatch, getState) => {
 Agile에서 나온 retrospective를 차용해서 마지막 모임을 가졌습니다.
 일정상 불참하신 디자이너분을 제외한 6명의 멤버가 모두 모여서 지원금으로 맛있는걸 먹고, 회고를 진행했습니다.
 **이번 스터디를 지원해주신 그라운드X분들께 감사드립니다.**
+
+> 각자 의견을 말한뒤 취합한것이며, 중복되는 의견의 수는 괄호() 안에 들어있습니다.
 
 ### What went well? / 잘된점
 - 리액트와 자바스크립트등을 공부할 수 있어서 좋았다. (4)
