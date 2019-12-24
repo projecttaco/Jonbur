@@ -123,6 +123,9 @@ const getContractEventsFromReceipt = (contractInstance, receipt) => {
 ### TransferOwnership
 이 부분도 위 코드와 비슷하게 getState()으로 Jetstream이 사용됐는지 판별하고, 리턴값에 따라 적절한 함수를 호출하게 됩니다.
 
+### Feed.js
+- TransferOnwer버튼을 활성화 시키는 로직에서 단순히 userAddress === currentOwner라고 되어있는 부분을 userAddress.toUpperCase() === currentOwner.toUpperCase()로 고쳤습니다. Jetstream에서 주는 address방식과 caver에서 가져오는 address방식이 다르기 때문에 이런식으로 해야 다양한 모습의 주소들을 매칭시킬 수 있습니다.
+
 ### Bug Fix & Miscellaneous
 - Account를 누르면 Klaytn Scope으로 이동하는 경로 설정이 깨져있었습니다. 이 부분을 바꿔서 이제는 잘 작동하게 되었습니다.
 - Transfer 이후에 받아오는 함수에서 ID라고 되어있는 부분을 'ID'로 고쳐서 잘 작동하게 만들었습니다.
