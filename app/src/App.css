@@ -152,3 +152,7 @@ body {
 .ant-skeleton-active {
   margin: -15px auto;
 }
+
+.ant-time-picker-panel-inner {
+  left: -40px;
+}
