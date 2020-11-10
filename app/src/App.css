@@ -17,6 +17,7 @@ body {
   /* background-color: #003368; */
   background: linear-gradient(90deg, #000428 0%, #004e92 100%);
   height: 30vh;
+  min-height: 220px;
 }
 
 .bottomHome {
@@ -58,7 +59,7 @@ body {
   right: 40px;
   bottom: 40px;
   background-color: #003368;
-  color: #FFF !important;
+  color: #fff !important;
   border-radius: 50%;
   text-align: center;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
@@ -78,7 +79,7 @@ body {
   background-color: #fafafa;
   min-height: 200px;
   text-align: center;
-  padding: 20px 10px
+  padding: 20px 10px;
 }
 
 .center {
@@ -92,7 +93,7 @@ body {
 
 .center.summary {
   margin: 0;
-  position: fixed;
+  /* position: fixed; */
   top: 18%;
   left: 50%;
   -ms-transform: translate(-50%, -50%);
@@ -137,6 +138,7 @@ body {
   font-size: 3em;
   top: 10vh;
   position: relative;
+  font-family: 'Avenir';
 }
 
 .homeImage {

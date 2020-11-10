@@ -33,6 +33,7 @@ class Dashboard extends Component {
         sum = sum > 1000 ? sum.toFixed(2) : sum.toFixed(4);
         return (
             <div className={'center summary'}>
+                <div style={{ color: '#cecece', fontSize: '0.8em' }}>Total HODL Amount</div>
                 <Title level={2} style={{ font: 'Bold 2.4em Avenir', color: 'white', marginBottom: '0px' }}>{sum} ETH</Title>
                 <div style={{ color: '#cecece', marginBottom: '1em' }}>≈ {formatter.format(sum * usd / 100)} USD</div>
             </div>
@@ -43,9 +44,9 @@ class Dashboard extends Component {
         const { current } = this.props;
         switch (current) {
             case 0:
-                return 'Set the amount.'
+                return 'Set the deposit amount.'
             case 1:
-                return 'Select the date.'
+                return 'Select the release date.'
             case 2:
                 return 'Review your transaction.'
             default:
@@ -64,7 +65,7 @@ class Dashboard extends Component {
                     marginBottom: "10px"
                 }}
             >
-                <Skeleton active paragraph={{ rows: 1 }}/>
+                <Skeleton active paragraph={{ rows: 1 }} />
             </Card>
         );
     }
@@ -98,9 +99,25 @@ class Dashboard extends Component {
                         {indexes && [...indexes.value].reverse().map((index => { return (<JonburCard key={index} index={index} />) }))}
                         {!processing && indexes && indexes.value.length < 1 && <Empty><Button type="primary" onClick={showModal}>Create Jonbur Now</Button></Empty>}
                     </div>
-                    <button onClick={showModal} className="deposit-modal-button">
+                    {/* <button onClick={showModal} className="deposit-modal-button">
                         <Icon type="plus" />
-                    </button>
+                    </button> */}
+                    <Icon type="plus" style={{
+                        backgroundColor: '#003368',
+                        width: 64,
+                        height: 64,
+                        position: 'fixed',
+                        right: '0.8em',
+                        bottom: '0.8em',
+                        color: '#fff',
+                        borderRadius: 32,
+                        fontSize: 40,
+                        cursor: 'pointer',
+                        paddingTop: 12,
+                        paddingLeft: 2,
+                        boxShadow: '0px 17px 10px -10px rgba(0,0,0,0.4)',
+                        zIndex: 5
+                    }} onClick={showModal} />
                 </div>
                 <Modal
                     title={this.renderModalTitle()}

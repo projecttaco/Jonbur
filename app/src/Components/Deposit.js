@@ -103,17 +103,17 @@ class Deposit extends Component {
                 <div className="steps-content">{steps[current]}</div>
                 <div className="steps-action" style={{ minHeight: '50px' }}>
                     {current < steps.length - 1 && (
-                        <Button type="primary" style={{ float: 'right', margin: '10px' }} onClick={() => this.props.onChange(current + 1)}>
+                        <Button type="primary" style={{ float: 'right', marginTop: '10px', marginLeft: '10px' }} onClick={() => this.props.onChange(current + 1)}>
                             Next
                         </Button>
                     )}
                     {current === steps.length - 1 && (
-                        <Button type="primary" style={{ float: 'right', margin: '10px' }} onClick={this.deposit}>
+                        <Button type="primary" style={{ float: 'right', marginTop: '10px', marginLeft: '10px' }} onClick={this.deposit}>
                             Confirm
                         </Button>
                     )}
                     {current > 0 && (
-                        <Button style={{ float: 'right', margin: '10px' }} onClick={() => this.props.onChange(current - 1)}>
+                        <Button style={{ float: 'right', marginTop: '10px', marginLeft: '10px' }} onClick={() => this.props.onChange(current - 1)}>
                             Previous
                         </Button>
                     )}

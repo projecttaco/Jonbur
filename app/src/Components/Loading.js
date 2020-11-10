@@ -14,7 +14,7 @@ class Loading extends Component {
                     title="Unkwon Supported Network"
                     subTitle="Sorry, this network is not supported. Please change to Ropsten Testnet"
                     extra={<Button type="primary">Back Home</Button>}
-                /> 
+                />
             )
         }
 
@@ -25,7 +25,7 @@ class Loading extends Component {
                     title="Ethereum Mainnet"
                     subTitle="Sorry, Ethereum Mainnet is not supported yet. Please change to Ropsten Testnet"
                     extra={<Button type="primary">Back Home</Button>}
-                /> 
+                />
             )
         }
 
@@ -36,7 +36,7 @@ class Loading extends Component {
                     <Result
                         status="403"
                         title="No Wallet Detected ⚠️"
-                        subTitle="This browser has no connection to the Ethereum network. Please use the Chrome/FireFox extension MetaMask, or dedicated Ethereum browsers Mist or Parity."
+                        subTitle={<div style={{ flex: 1 }}><div style={{ margin: 'auto', maxWidth: 500 }}>This browser has no connection to the Ethereum network. Please use the Chrome/FireFox extension MetaMask, or dedicated Ethereum browsers Mist or Parity.</div></div>}
                         extra={
                             <div >
                                 <div className={'browserButton'} style={{
@@ -45,10 +45,9 @@ class Loading extends Component {
                                 }}>
                                     <img style={{ height: '24px', marginRight: '10px' }} alt={'Opera'} src={require('../images/opera.png')} /> Open with Opera
                                 </div>
-                                <div className={'browserButton'}>
+                                <div className={'browserButton'} style={{ background: 'white' }} onClick={() => { window.location = "https://metamask.app.link/dapp/projecttaco.github.io/jonbur" }}>
                                     <img style={{ height: '24px', marginRight: '10px' }} alt={'Metamask'} src={require('../images/metamask.png')} /> Open with Metamask
                                 </div>
-                                <Button type="primary">Back Home</Button>
                             </div>}
                     />
                 </main>

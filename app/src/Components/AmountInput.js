@@ -26,22 +26,24 @@ class AmountInput extends Component {
             // 100: maxAmount,
         }
         marks[balance] = 'MAX';
-        var sliderInput = inputValue === ''? 0:inputValue
+        var sliderInput = inputValue === '' ? 0 : inputValue
         const gasFee = 0.01
         var max = balance - gasFee;
         return (
             <Row>
                 {/* 나중에는 이 부분을 Account info로 따로 빼기 */}
-                <Avatar style={{ float: 'left', margin:'0px 10px' }} size="large" icon="user"/>
-                <p style={{ float: 'right', marginBottom: '0px' }}>{`${account.substr(0, 6)}...${account.substr(account.length - 4, account.length)}`}</p><br/>
+                <Avatar style={{ float: 'left', margin: '0px 10px' }} size="large" icon="user" />
+                <p style={{ float: 'right', marginBottom: '0px' }}>{`${account.substr(0, 6)}...${account.substr(account.length - 4, account.length)}`}</p><br />
                 <h3 style={{ float: 'right' }}>Balance: {balance.toFixed(4)}ETH</h3>
-                <Input 
-                    step={0.01} 
-                    min={0} 
-                    max={max} 
-                    value={inputValue} 
-                    onChange={e => this.props.amountChange(e.target.value)} 
-                    style={{ font: '2em' }} 
+                <Input
+                    type={Input.Number}
+                    pattern="\\d*"
+                    step={0.01}
+                    min={0}
+                    max={max}
+                    value={inputValue}
+                    onChange={e => this.props.amountChange(e.target.value)}
+                    style={{ font: '2em' }}
                     prefix="Ξ" suffix="ETH" />
                 <Slider step={0.01} min={0} max={max} value={sliderInput} onChange={e => this.props.amountChange(e)} style={{ margin: 20 }} marks={marks} />
             </Row>
@@ -60,7 +62,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        amountChange: amount => dispatch({type: 'UPDATE_AMOUNT', value: amount}),
+        amountChange: amount => dispatch({ type: 'UPDATE_AMOUNT', value: amount }),
     };
 }
 

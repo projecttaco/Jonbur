@@ -16,7 +16,7 @@ const { Header, Content, Footer } = Layout;
 // console.log(caver);
 
 class App extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
 
@@ -66,7 +66,7 @@ class App extends Component {
       case '1':
         return <Home />
       case '2':
-        return <Dashboard account = {account}/>
+        return <Dashboard account={account} />
       default:
         return <Home />
     }
@@ -85,7 +85,7 @@ class App extends Component {
   }
 
   renderFooter = () => {
-    return <Footer style={{ marginTop: '30px', textAlign: 'center' }}>Team TACO ©2019 Created by TEAM TACO</Footer>
+    return <Footer style={{ marginTop: '30px', textAlign: 'center' }}>Copyright ©2019 Team Taco</Footer>
   }
 
   render() {
@@ -125,8 +125,8 @@ class App extends Component {
             visible={this.state.visible}
             witdh={320}
           >
-            <div className={'menuButton'} onClick={()=>{this.props.goto('1'); this.onClose();}}>Home</div>
-            <div className={'menuButton'} onClick={()=>{this.props.goto('2'); this.onClose();}}>Dashboard</div>
+            <div className={'menuButton'} onClick={() => { this.props.goto('1'); this.onClose(); }}>Home</div>
+            <div className={'menuButton'} onClick={() => { this.props.goto('2'); this.onClose(); }}>Dashboard</div>
             <div className={'menuButton'}>Blog</div>
           </Drawer>
         </Layout>
